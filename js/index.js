@@ -1,6 +1,20 @@
 'use strict'
-window.addEventListener('load', appInit)
+window.addEventListener('load', preloadImages)
 let currentSlide;
+
+function preloadImages() {
+	let periods = ['night', 'morning', 'afternoon', 'evening'];
+	let images = [];
+	for (let i = 0; i < 4; i++) {
+		for (let j = 1; j < 21; j++) {
+			let image = new Image();
+			image.src = `https://raw.githubusercontent.com/AlexShumsky/stage1-tasks/assets/images/${periods[i]}/${addZero(j)}.jpg`;
+			images.push(image);
+		}
+	}
+	appInit()
+}
+
 function appInit() {
 
 	setInterval(timeManager, 500);
@@ -13,15 +27,22 @@ function appInit() {
 
 function localManager() {
 	const userName = document.querySelector('.user__name');
-	getLocalName();
+	const userCity = document.querySelector('.user__city');
+	getLocalProperties();
 
-	function getLocalName() {
+
+	function getLocalProperties() {
 		if (localStorage.getItem('userName')) userName.value = localStorage.getItem('userName');
+		if (localStorage.getItem('userCity')) userCity.value = localStorage.getItem('userCity');
 	}
 
 	userName.addEventListener('change', saveUserName);
+	userCity.addEventListener('change', saveUserCity);
 	function saveUserName() {
 		localStorage.setItem('userName', this.value);
+	}
+	function saveUserCity() {
+		localStorage.setItem('userCity', this.value);
 	}
 }
 
@@ -85,23 +106,38 @@ function changeBackground() {
 	const bgDate = new Date();
 	let dayPeriodBg = (bgDate.getHours() < 6 || bgDate.getHours() == 24) ? 'night' :
 		(bgDate.getHours() < 12) ? 'morning' : (bgDate.getHours() < 18) ? 'afternoon' : 'evening';
-	document.querySelector('.wrapper').style.background =
+	document.querySelector('body').style.background =
 		`url(https://raw.githubusercontent.com/AlexShumsky/stage1-tasks/assets/images/${dayPeriodBg}/${addZero(currentSlide)}.jpg) center / cover no-repeat`;
 }
 function backgroundSlider() {
 	const arrows = document.querySelectorAll('.button-slider');
+	let timer = true;
+
 	arrows.forEach(arrow => arrow.addEventListener('click', changeCurrentSlide))
+
 	function changeCurrentSlide() {
-		this.classList.contains('button-slider-r') ? nextSlide() : prevSlide();
+		(this.classList.contains('button-slider-r')) ? nextSlide() : prevSlide();
+
 		function prevSlide() {
-			+currentSlide--;
-			if (+currentSlide < 1) currentSlide = 20;
-			changeBackground()
+			if (timer) {
+				+currentSlide--;
+				if (+currentSlide < 1) currentSlide = 20;
+				timer = false;
+				changeBackground()
+
+				setTimeout(() => timer = true, 700)
+			}
 		}
+
 		function nextSlide() {
-			+currentSlide++;
-			if (+currentSlide > 20) currentSlide = 1;
-			changeBackground()
+			if (timer) {
+				+currentSlide++;
+				if (+currentSlide > 20) currentSlide = 1;
+				timer = false;
+				changeBackground()
+
+				setTimeout(() => timer = true, 700)
+			}
 		}
 	}
 }
@@ -112,5 +148,5 @@ function getRandomNum(minU, maxU) {
 	currentSlide = addZero(Math.floor(Math.random() * (max - min + 1) + min));
 }
 function addZero(num) {
-	return (num > 0 && num < 10) ? '0' + num : num;
+	return (num.toString().length == 1) ? '0' + num : num;
 }

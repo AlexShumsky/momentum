@@ -8,22 +8,14 @@ $gray: #bbb;
 body {
 	color: $white;
 	user-select: none;
-	background: #000;
 	font-size: 16px;
-	min-width: 480px;
-}
-input::placeholder {
-	color: $gray;
-	font-size: 16px;
-}
-.wrapper {
 	width: 100vw;
 	height: 100vh;
-	overflow: hidden;
-	position: relative;
 	z-index: 1;
-	background-blend-mode: multiply;
-	transition: background-image 0.3s ease 0s;
+
+	transition: background-image 0.7s ease-in-out;
+	position: relative;
+
 	&::before {
 		content: "";
 		width: 100%;
@@ -34,6 +26,15 @@ input::placeholder {
 		background: rgba(0, 0, 0, 0.4);
 		z-index: -1;
 	}
+}
+input::placeholder {
+	color: $gray;
+}
+.wrapper {
+	width: 100vw;
+	height: 100vh;
+	overflow: hidden;
+	position: relative;
 }
 
 .container {
