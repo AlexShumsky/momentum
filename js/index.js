@@ -1,10 +1,14 @@
 'use strict'
 window.addEventListener('load', appInit)
-
+let currentSlide;
 function appInit() {
+
 	setInterval(timeManager, 500);
+	getRandomNum(1, 20)
 	localManager()
 	changeBackground()
+	backgroundSlider()
+
 }
 
 function localManager() {
@@ -79,19 +83,34 @@ function timeManager() {
 }
 function changeBackground() {
 	const bgDate = new Date();
-
 	let dayPeriodBg = (bgDate.getHours() < 6 || bgDate.getHours() == 24) ? 'night' :
 		(bgDate.getHours() < 12) ? 'morning' : (bgDate.getHours() < 18) ? 'afternoon' : 'evening';
 	document.querySelector('.wrapper').style.background =
-		`url(https://raw.githubusercontent.com/rolling-scopes-school/stage1-tasks/assets/images/${dayPeriodBg}/${getRandomNum(1, 20)}.jpg) center / cover no-repeat`;
+		`url(https://raw.githubusercontent.com/AlexShumsky/stage1-tasks/assets/images/${dayPeriodBg}/${addZero(currentSlide)}.jpg) center / cover no-repeat`;
 }
-
+function backgroundSlider() {
+	const arrows = document.querySelectorAll('.button-slider');
+	arrows.forEach(arrow => arrow.addEventListener('click', changeCurrentSlide))
+	function changeCurrentSlide() {
+		this.classList.contains('button-slider-r') ? nextSlide() : prevSlide();
+		function prevSlide() {
+			+currentSlide--;
+			if (+currentSlide < 1) currentSlide = 20;
+			changeBackground()
+		}
+		function nextSlide() {
+			+currentSlide++;
+			if (+currentSlide > 20) currentSlide = 1;
+			changeBackground()
+		}
+	}
+}
 
 function getRandomNum(minU, maxU) {
 	let max = Math.floor(maxU);
 	let min = Math.ceil(minU);
-	return addZero(Math.floor(Math.random() * (max - min + 1) + min));
+	currentSlide = addZero(Math.floor(Math.random() * (max - min + 1) + min));
 }
 function addZero(num) {
-	return (num >= 0 && num < 10) ? '0' + num : num;
+	return (num > 0 && num < 10) ? '0' + num : num;
 }
