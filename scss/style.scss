@@ -12,7 +12,6 @@ body {
 	width: 100vw;
 	height: 100vh;
 	z-index: 1;
-
 	transition: background-image 0.7s ease-in-out;
 	position: relative;
 
@@ -163,6 +162,10 @@ input::placeholder {
 		right: 20px;
 		div {
 			margin-bottom: 10px;
+		}
+		&__image {
+			font-size: 44px;
+			margin: 0;
 		}
 		&__city {
 			input {

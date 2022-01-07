@@ -22,7 +22,7 @@ function appInit() {
 	localManager()
 	changeBackground()
 	backgroundSlider()
-
+	getWeather()
 }
 
 function localManager() {
@@ -140,6 +140,24 @@ function backgroundSlider() {
 			}
 		}
 	}
+}
+async function getWeather() {
+	const url = `https://api.openweathermap.org/data/2.5/weather?q=%D0%9C%D0%B8%D0%BD%D1%81%D0%BA&lang=en&appid=052d91374bd32073e60e2c409c2a2625&units=metric`;
+	const res = await fetch(url);
+	const data = await res.json();
+	showWeather();
+	function showWeather() {
+		let weatherIcon = document.querySelector('.weather__image');
+		document.querySelector('.weather__temperature').textContent =
+			`${Math.round(data.main.temp)}°C ${data.weather[0].description}`
+		document.querySelector('.weather__wind').textContent =
+			`Wind speed: ${Math.round(data.wind.speed)} m/s`
+		document.querySelector('.weather__humidity').textContent =
+			`humidity:  ${data.main.humidity}%`
+		weatherIcon.className = 'weather__image owf';
+		weatherIcon.classList.add(`owf-${data.weather[0].id}`)
+	}
+
 }
 
 function getRandomNum(minU, maxU) {
