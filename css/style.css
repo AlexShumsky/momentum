@@ -204,6 +204,7 @@ body {
   background: transparent;
   border-bottom: 1px solid #fff;
   padding-bottom: 5px;
+  color: #fff;
 }
 
 .momentum__inner .weather__city input::-webkit-input-placeholder {
