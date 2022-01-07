@@ -6,12 +6,87 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="stylesheet" href="css/style.css">
-	<title>Document</title>
+	<link rel="icon" href="assets/favicon.ico">
+	<title>Momentum</title>
 </head>
 
 <body>
-	<h1>Hello World</h1>
-	<p>We are <span>here)</span></p>
+	<div class="wrapper">
+		<div class="container">
+			<div class="momentum__inner">
+				<header class="time">
+					<span class="time-h">00 </span>:
+					<span class="time-m">00 </span>:
+					<span class="time-s">00</span>
+					<span class="time-daytime">PM</span>
+				</header>
+				<main class="main">
+					<section class="date">
+						<span class="date-day">Thursday, </span>
+						<span class="date-month">January </span>
+						<span class="date-num">6</span>
+					</section>
+					<section class="hello">
+						<span class="hello__text">Good evening</span>
+						<input type="text" placeholder="[Enter name]">
+					</section>
+				</main>
+				<footer class="footer">
+					<button class="button button-quote">
+						<img src="assets/svg/reload.svg" alt="reload img">
+					</button>
+					<section class="quote">
+						<p class="quote-text">Lorem ipsum dolor sit amet consectetur.</p>
+						<p class="quote-author">Lorem, ipsum dolor.</p>
+					</section>
+				</footer>
+				<aside class="audio">
+					<nav class="audio__nav">
+						<button class="button audio__button">
+							<img src="assets/svg/play-prev.svg" alt="previous track">
+						</button>
+						<button class="button audio__button">
+							<img src="assets/svg/play.svg" alt="play">
+						</button>
+						<button class="button audio__button">
+							<img src="assets/svg/play-next.svg" alt="next track">
+						</button>
+					</nav>
+					<ul class="audio__list">
+						<li class="audio__track">Aqua Caelestis</li>
+						<li class="audio__track">Ennio Morricone</li>
+						<li class="audio__track">River Flows In You</li>
+						<li class="audio__track">Summer Wind</li>
+					</ul>
+				</aside>
+				<aside class="weather">
+					<div class="weather__city">
+						<input type="text" placeholder="minsk">
+					</div>
+					<div class="weather__image">
+					</div>
+					<div class="weather__temperature">-4°C
+						scattered clouds</div>
+					<div class="weather__wind">
+						Wind speed: 7 m/s
+					</div>
+					<div class="weather__humidity">
+						humidity: 68%
+					</div>
+				</aside>
+				<button class="button button-slider button-slider-l">
+					<img src="assets/svg/slider-prev.svg" alt="prev slide">
+				</button>
+				<button class="button button-slider button-slider-r">
+					<img src="assets/svg/slider-next.svg" alt="next slide">
+				</button>
+			</div>
+		</div>
+	</div>
+	<audio src="assets/audio/Aqua Caelestis.mp3"></audio>
+	<audio src="assets/audio/Ennio Morricone.mp3"></audio>
+	<audio src="assets/audio/River Flows In You.mp3"></audio>
+	<audio src="assets/audio/Summer Wind.mp3"></audio>
 	<script src="js/index.js"></script>
 </body>
 
