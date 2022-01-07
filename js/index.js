@@ -43,6 +43,7 @@ function localManager() {
 	}
 	function saveUserCity() {
 		localStorage.setItem('userCity', this.value);
+		getWeather(localStorage.getItem('userCity'))
 	}
 }
 
@@ -141,23 +142,39 @@ function backgroundSlider() {
 		}
 	}
 }
-async function getWeather() {
-	const url = `https://api.openweathermap.org/data/2.5/weather?q=%D0%9C%D0%B8%D0%BD%D1%81%D0%BA&lang=en&appid=052d91374bd32073e60e2c409c2a2625&units=metric`;
+async function getWeather(city = 'minsk') {
+	const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&lang=en&appid=052d91374bd32073e60e2c409c2a2625&units=metric`;
 	const res = await fetch(url);
 	const data = await res.json();
-	showWeather();
+	const temp = document.querySelector('.weather__temperature');
+	const wind = document.querySelector('.weather__wind');
+	const humidity = document.querySelector('.weather__humidity');
+	const weatherIcon = document.querySelector('.weather__image');
+	const error = document.querySelector('.weather__error');
+	(data.cod == '404') ? showError() : showWeather();
 	function showWeather() {
-		let weatherIcon = document.querySelector('.weather__image');
-		document.querySelector('.weather__temperature').textContent =
-			`${Math.round(data.main.temp)}°C ${data.weather[0].description}`
-		document.querySelector('.weather__wind').textContent =
-			`Wind speed: ${Math.round(data.wind.speed)} m/s`
-		document.querySelector('.weather__humidity').textContent =
-			`humidity:  ${data.main.humidity}%`
+		hideError()
+		temp.textContent = `${Math.round(data.main.temp)}°C ${data.weather[0].description}`;
+		wind.textContent = `Wind speed: ${Math.round(data.wind.speed)} m/s`;
+		humidity.textContent = `humidity:  ${data.main.humidity}%`;
 		weatherIcon.className = 'weather__image owf';
 		weatherIcon.classList.add(`owf-${data.weather[0].id}`)
 	}
-
+	function showError() {
+		temp.style.display = 'none';
+		wind.style.display = 'none';
+		humidity.style.display = 'none';
+		weatherIcon.style.display = 'none';
+		error.style.display = 'block';
+		error.textContent = `Error! City not found for '${document.querySelector('.user__city').value}'!`
+	}
+	function hideError() {
+		temp.style.display = 'block';
+		wind.style.display = 'block';
+		humidity.style.display = 'block';
+		weatherIcon.style.display = 'block';
+		error.style.display = 'none';
+	}
 }
 
 function getRandomNum(minU, maxU) {
