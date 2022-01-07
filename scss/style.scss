@@ -22,7 +22,6 @@ input::placeholder {
 	overflow: hidden;
 	position: relative;
 	z-index: 1;
-	background: url("../assets/image/bg2.jpg") center / cover no-repeat;
 	background-blend-mode: multiply;
 	transition: background-image 0.3s ease 0s;
 	&::before {

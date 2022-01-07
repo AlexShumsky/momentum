@@ -4,7 +4,9 @@ window.addEventListener('load', appInit)
 function appInit() {
 	setInterval(timeManager, 500);
 	localManager()
+	changeBackground()
 }
+
 function localManager() {
 	const userName = document.querySelector('.user__name');
 	getLocalName();
@@ -14,18 +16,17 @@ function localManager() {
 	}
 
 	userName.addEventListener('change', saveUserName);
-	function saveUserName(el) {
+	function saveUserName() {
 		localStorage.setItem('userName', this.value);
 	}
-
 }
 
 function timeManager() {
 	const date = new Date();
+	sayHello(date.getHours())
 	showCurrentTime(date.getHours(), date.getMinutes(), date.getSeconds())
 	showDayTime(date.getHours())
 	showDate(date.getDate(), date.getDay(), date.getMonth())
-	sayHello(date.getHours())
 
 	function showCurrentTime(h, m, s) {
 		const hour = document.querySelector('.time-h');
@@ -68,14 +69,29 @@ function timeManager() {
 		daytime.textContent = (h > 12) ? 'PM' : 'AM';
 	}
 	function sayHello(time) {
-		document.querySelector('.hello__text').textContent = `Good, ${(time < 6 || time == 24) ? 'night' :
-			(time < 12) ? 'morning' : (time < 18) ? 'afternoon' : 'evening'}`;
-	}
-
-	function addZero(num) {
-		return (num >= 0 && num < 10) ? '0' + num : num;
+		let dayPeriod = (time < 6 || time == 24) ? 'night' :
+			(time < 12) ? 'morning' : (time < 18) ? 'afternoon' : 'evening';
+		document.querySelector('.hello__text').textContent = `Good, ${dayPeriod}`;
 	}
 	function checkHours(h) {
 		return (h > 12) ? h % 12 : h;
 	}
+}
+function changeBackground() {
+	const bgDate = new Date();
+
+	let dayPeriodBg = (bgDate.getHours() < 6 || bgDate.getHours() == 24) ? 'night' :
+		(bgDate.getHours() < 12) ? 'morning' : (bgDate.getHours() < 18) ? 'afternoon' : 'evening';
+	document.querySelector('.wrapper').style.background =
+		`url(https://raw.githubusercontent.com/rolling-scopes-school/stage1-tasks/assets/images/${dayPeriodBg}/${getRandomNum(1, 20)}.jpg) center / cover no-repeat`;
+}
+
+
+function getRandomNum(minU, maxU) {
+	let max = Math.floor(maxU);
+	let min = Math.ceil(minU);
+	return addZero(Math.floor(Math.random() * (max - min + 1) + min));
+}
+function addZero(num) {
+	return (num >= 0 && num < 10) ? '0' + num : num;
 }
