@@ -1,5 +1,11 @@
+@charset "UTF-8";
 @import url("nullstyle.css");
-@import url("../assets/fonts/Arial-MT.woff");
+@font-face {
+  font-family: "Arial-MT";
+  src: url("../assets/fonts/Arial-MT.woff");
+  /* Путь к файлу со шрифтом */
+}
+
 body {
   color: #fff;
   -webkit-user-select: none;
@@ -7,6 +13,27 @@ body {
       -ms-user-select: none;
           user-select: none;
   background: #000;
+  font-size: 16px;
+  min-width: 480px;
+}
+
+input::-webkit-input-placeholder {
+  color: #bbb;
+  font-size: 16px;
+}
+
+input:-ms-input-placeholder {
+  color: #bbb;
+  font-size: 16px;
+}
+
+input::-ms-input-placeholder {
+  color: #bbb;
+  font-size: 16px;
+}
+
+input::placeholder {
+  color: #bbb;
   font-size: 16px;
 }
 
@@ -17,6 +44,9 @@ body {
   position: relative;
   z-index: 1;
   background: url("../assets/image/bg2.jpg") center/cover no-repeat;
+  background-blend-mode: multiply;
+  -webkit-transition: background-image 0.3s ease 0s;
+  transition: background-image 0.3s ease 0s;
 }
 
 .wrapper::before {
@@ -67,7 +97,8 @@ body {
   min-height: 125px;
   margin-bottom: 30px;
   font-size: 100px;
-  font-family: sans-serif;
+  font-family: "Arial-MT";
+  letter-spacing: -5px;
   font-weight: 700;
 }
 
@@ -103,8 +134,24 @@ body {
           user-select: text;
   color: #fff;
   background: inherit;
-  font-size: 20px;
+  font-size: 40px;
   width: 30%;
+}
+
+.momentum__inner .main .hello input::-webkit-input-placeholder {
+  font-size: 28px;
+}
+
+.momentum__inner .main .hello input:-ms-input-placeholder {
+  font-size: 28px;
+}
+
+.momentum__inner .main .hello input::-ms-input-placeholder {
+  font-size: 28px;
+}
+
+.momentum__inner .main .hello input::placeholder {
+  font-size: 28px;
 }
 
 .momentum__inner .footer {
@@ -204,21 +251,5 @@ body {
   background: transparent;
   border-bottom: 1px solid #fff;
   padding-bottom: 5px;
-  color: #fff;
-}
-
-.momentum__inner .weather__city input::-webkit-input-placeholder {
-  color: #fff;
-}
-
-.momentum__inner .weather__city input:-ms-input-placeholder {
-  color: #fff;
-}
-
-.momentum__inner .weather__city input::-ms-input-placeholder {
-  color: #fff;
-}
-
-.momentum__inner .weather__city input::placeholder {
   color: #fff;
 }

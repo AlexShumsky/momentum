@@ -1,14 +1,31 @@
 'use strict'
+window.addEventListener('load', appInit)
 
+function appInit() {
+	setInterval(timeManager, 500);
+	localManager()
+}
+function localManager() {
+	const userName = document.querySelector('.user__name');
+	getLocalName();
 
-//window.addEventListener('load', timeManager);
-setInterval(timeManager, 500);
+	function getLocalName() {
+		if (localStorage.getItem('userName')) userName.value = localStorage.getItem('userName');
+	}
+
+	userName.addEventListener('change', saveUserName);
+	function saveUserName(el) {
+		localStorage.setItem('userName', this.value);
+	}
+
+}
+
 function timeManager() {
-
 	const date = new Date();
 	showCurrentTime(date.getHours(), date.getMinutes(), date.getSeconds())
 	showDayTime(date.getHours())
 	showDate(date.getDate(), date.getDay(), date.getMonth())
+	sayHello(date.getHours())
 
 	function showCurrentTime(h, m, s) {
 		const hour = document.querySelector('.time-h');
@@ -46,14 +63,19 @@ function timeManager() {
 		document.querySelector('.date-month').textContent = monthObj[month];
 		document.querySelector('.date-num').textContent = date;
 	}
+	function showDayTime(h) {
+		let daytime = document.querySelector('.time-daytime');
+		daytime.textContent = (h > 12) ? 'PM' : 'AM';
+	}
+	function sayHello(time) {
+		document.querySelector('.hello__text').textContent = `Good, ${(time < 6 || time == 24) ? 'night' :
+			(time < 12) ? 'morning' : (time < 18) ? 'afternoon' : 'evening'}`;
+	}
+
 	function addZero(num) {
 		return (num >= 0 && num < 10) ? '0' + num : num;
 	}
 	function checkHours(h) {
 		return (h > 12) ? h % 12 : h;
-	}
-	function showDayTime(h) {
-		let daytime = document.querySelector('.time-daytime');
-		daytime.textContent = (h > 12) ? 'PM' : 'AM';
 	}
 }
