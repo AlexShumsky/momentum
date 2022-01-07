@@ -249,6 +249,7 @@ input::placeholder {
 
 .momentum__inner .weather__city input {
   background: transparent;
+  font-size: 20px;
   border-bottom: 1px solid #fff;
   padding-bottom: 5px;
   color: #fff;

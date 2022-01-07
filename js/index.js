@@ -1,10 +1,11 @@
 'use strict'
 window.addEventListener('load', preloadImages)
+const images = [];
 let currentSlide;
+
 
 function preloadImages() {
 	let periods = ['night', 'morning', 'afternoon', 'evening'];
-	let images = [];
 	for (let i = 0; i < 4; i++) {
 		for (let j = 1; j < 21; j++) {
 			let image = new Image();
@@ -107,8 +108,8 @@ function changeBackground() {
 	const bgDate = new Date();
 	let dayPeriodBg = (bgDate.getHours() < 6 || bgDate.getHours() == 24) ? 'night' :
 		(bgDate.getHours() < 12) ? 'morning' : (bgDate.getHours() < 18) ? 'afternoon' : 'evening';
-	document.querySelector('body').style.background =
-		`url(https://raw.githubusercontent.com/AlexShumsky/stage1-tasks/assets/images/${dayPeriodBg}/${addZero(currentSlide)}.jpg) center / cover no-repeat`;
+	let imageLink = images.filter(image => image.src == `https://raw.githubusercontent.com/AlexShumsky/stage1-tasks/assets/images/${dayPeriodBg}/${addZero(currentSlide)}.jpg`)[0];
+	document.querySelector('body').style.background = `url(${imageLink.src}) center / cover no-repeat`;
 }
 function backgroundSlider() {
 	const arrows = document.querySelectorAll('.button-slider');
