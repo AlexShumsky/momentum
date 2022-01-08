@@ -207,6 +207,8 @@ function audioManager() {
 	const playPrevButton = document.querySelector('.audio__button-prev');
 	const audios = document.querySelectorAll('[data-track]');
 	let trackNum = 0;
+	let currentAudio = audios[trackNum];
+
 
 	playButton.addEventListener('click', useAudio)
 	playNextButton.addEventListener('click', playNextAudio)
@@ -219,38 +221,48 @@ function audioManager() {
 			const audioList = document.querySelector('.audio__list');
 			const audioElement = document.createElement('li');
 			audioElement.classList.add('audio__track');
+			if (i == 0) audioElement.classList.add('audio__track-active');
 			audioElement.textContent = Object.values(audios[i].dataset);
 			audioList.append(audioElement)
 		})
 	}
 
 	function useAudio() {
-		let isPlay = !audios[trackNum].paused;
+		let isPlay = !currentAudio.paused;
 		(isPlay) ? pauseAudio(isPlay) : playAudio(isPlay);
 	}
 
 	function playAudio(isPlay) {
-		audios[trackNum].currentTime = 0;
-		audios[trackNum].play();
+		currentAudio.currentTime = 0;
+		currentAudio.play();
 		changePlayButton(isPlay)
+		markPlayTrack()
+		currentAudio.onended = () => playNextAudio()
 	}
 	function pauseAudio(isPlay) {
-		audios[trackNum].pause();
+		currentAudio.pause();
 		changePlayButton(isPlay)
 	}
 	function playNextAudio() {
 		pauseAudio()
 		trackNum = (trackNum < audios.length - 1) ? trackNum + 1 : trackNum = 0;
+		currentAudio = audios[trackNum];
 		playAudio()
 	}
 	function playPrevAudio() {
 		pauseAudio()
 		trackNum = (trackNum < 1) ? audios.length - 1 : trackNum - 1;
+		currentAudio = audios[trackNum];
 		playAudio()
 	}
 
 	function changePlayButton(isPlay) {
 		playButton.children[0].src = `assets/svg/${isPlay ? 'play' : 'pause'}.svg`;
+	}
+	function markPlayTrack() {
+		const tracks = document.querySelectorAll('.audio__track')
+		tracks.forEach(track => track.classList.remove('audio__track-active'))
+		tracks[trackNum].classList.add('audio__track-active')
 	}
 }
 

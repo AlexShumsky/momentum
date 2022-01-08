@@ -204,10 +204,14 @@ input::placeholder {
 
 .momentum__inner .audio {
   left: 20px;
+  max-height: 45%;
+  padding: 10px;
+  overflow: auto;
 }
 
-.momentum__inner .audio__nav {
-  margin-bottom: 20px;
+.momentum__inner .audio__list {
+  max-height: 20%;
+  overflow: hidden;
 }
 
 .momentum__inner .audio button:nth-child(2) {
@@ -231,9 +235,15 @@ input::placeholder {
   top: 0px;
   width: 16px;
   height: 16px;
-  background: url("../assets/svg/ok.svg") center/contain no-repeat;
-  -webkit-filter: invert(100%);
-          filter: invert(100%);
+  background: url("../assets/svg/okDefault.svg") center/contain no-repeat;
+}
+
+.momentum__inner .audio__track-active {
+  color: #d38d0b;
+}
+
+.momentum__inner .audio__track-active::before {
+  background: url("../assets/svg/okActive.svg") center/contain no-repeat;
 }
 
 .momentum__inner .weather {
