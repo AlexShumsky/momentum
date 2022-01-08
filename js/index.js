@@ -2,7 +2,6 @@
 import { quotes } from './quotes.js';
 const images = [];
 let currentSlide = addZero(getRandomNum(1, 20));
-//console.log(quotes[0])
 window.addEventListener('load', preloadImages)
 
 function preloadImages() {
@@ -24,8 +23,25 @@ function appInit() {
 	changeBackground()
 	backgroundSlider()
 	getWeather()
-	//showquote()
+	quoteManager()
 }
+function quoteManager() {
+	showQuote()
+	changeQuote()
+
+	function showQuote() {
+		const quoteContainer = document.querySelector('.quote-text');
+		const quoteAuthorContainer = document.querySelector('.quote-author');
+		let randomQuote = quotes[getRandomNum(0, 1643)];
+		quoteContainer.textContent = randomQuote.text;
+		quoteAuthorContainer.textContent = randomQuote.author || 'Anonimus';
+	}
+	function changeQuote() {
+		const quoteButton = document.querySelector('.button-quote');
+		quoteButton.addEventListener('click', showQuote)
+	}
+}
+
 
 function localManager() {
 	const userName = document.querySelector('.user__name');
