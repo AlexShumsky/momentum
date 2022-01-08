@@ -6,6 +6,10 @@
   /* Путь к файлу со шрифтом */
 }
 
+html {
+  min-width: 460px;
+}
+
 body {
   color: #fff;
   -webkit-user-select: none;
@@ -13,12 +17,13 @@ body {
       -ms-user-select: none;
           user-select: none;
   font-size: 16px;
-  width: 100vw;
+  width: 100%;
   height: 100vh;
   z-index: 1;
   -webkit-transition: background-image 0.7s ease-in-out;
   transition: background-image 0.7s ease-in-out;
   position: relative;
+  overflow: hidden;
 }
 
 body::before {
@@ -49,8 +54,8 @@ input::placeholder {
 }
 
 .wrapper {
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  height: 100%;
   overflow: hidden;
   position: relative;
 }
@@ -87,14 +92,26 @@ input::placeholder {
       -ms-flex-align: end;
           align-items: flex-end;
   -webkit-box-flex: 0;
-      -ms-flex: 0 1 50%;
-          flex: 0 1 50%;
+      -ms-flex: 0 1 60%;
+          flex: 0 1 60%;
   min-height: 125px;
   margin-bottom: 30px;
-  font-size: 100px;
+  font-size: 85px;
   font-family: "Arial-MT";
   letter-spacing: -5px;
   font-weight: 700;
+}
+
+@media (max-width: 1024px) {
+  .momentum__inner .time {
+    font-size: 60px;
+  }
+}
+
+@media (max-width: 768px) {
+  .momentum__inner .time {
+    font-size: 38px;
+  }
 }
 
 .momentum__inner .time-daytime {
@@ -103,8 +120,8 @@ input::placeholder {
 
 .momentum__inner .main {
   -webkit-box-flex: 0;
-      -ms-flex: 0 1 50%;
-          flex: 0 1 50%;
+      -ms-flex: 0 1 40%;
+          flex: 0 1 40%;
   text-align: center;
 }
 
@@ -118,8 +135,32 @@ input::placeholder {
   margin-bottom: 20px;
 }
 
+@media (max-width: 1024px) {
+  .momentum__inner .main .hello {
+    font-size: 30px;
+  }
+}
+
+@media (max-width: 768px) {
+  .momentum__inner .main .hello {
+    font-size: 20px;
+  }
+}
+
 .momentum__inner .main .hello__text {
   margin-right: 10px;
+}
+
+@media (max-width: 1024px) {
+  .momentum__inner .main .hello__text {
+    font-size: 24px;
+  }
+}
+
+@media (max-width: 768px) {
+  .momentum__inner .main .hello__text {
+    font-size: 20px;
+  }
 }
 
 .momentum__inner .main .hello input {
@@ -131,6 +172,18 @@ input::placeholder {
   background: inherit;
   font-size: 40px;
   width: 30%;
+}
+
+@media (max-width: 1024px) {
+  .momentum__inner .main .hello input {
+    font-size: 24px;
+  }
+}
+
+@media (max-width: 768px) {
+  .momentum__inner .main .hello input {
+    font-size: 20px;
+  }
 }
 
 .momentum__inner .main .hello input::-webkit-input-placeholder {
@@ -147,6 +200,36 @@ input::placeholder {
 
 .momentum__inner .main .hello input::placeholder {
   font-size: 28px;
+}
+
+@media (max-width: 1024px) {
+  .momentum__inner .main .hello input::-webkit-input-placeholder {
+    font-size: 24px;
+  }
+  .momentum__inner .main .hello input:-ms-input-placeholder {
+    font-size: 24px;
+  }
+  .momentum__inner .main .hello input::-ms-input-placeholder {
+    font-size: 24px;
+  }
+  .momentum__inner .main .hello input::placeholder {
+    font-size: 24px;
+  }
+}
+
+@media (max-width: 768px) {
+  .momentum__inner .main .hello input::-webkit-input-placeholder {
+    font-size: 20px;
+  }
+  .momentum__inner .main .hello input:-ms-input-placeholder {
+    font-size: 20px;
+  }
+  .momentum__inner .main .hello input::-ms-input-placeholder {
+    font-size: 20px;
+  }
+  .momentum__inner .main .hello input::placeholder {
+    font-size: 20px;
+  }
 }
 
 .momentum__inner .footer {
@@ -179,6 +262,21 @@ input::placeholder {
   margin-bottom: 20px;
 }
 
+@media (max-width: 1024px) {
+  .momentum__inner .button {
+    width: 30px;
+    height: 30px;
+  }
+}
+
+@media (max-width: 768px) {
+  .momentum__inner .button {
+    width: 20px;
+    height: 20px;
+    margin-bottom: 10px;
+  }
+}
+
 .momentum__inner .button img {
   width: 100%;
   height: 100%;
@@ -187,6 +285,7 @@ input::placeholder {
 .momentum__inner aside {
   position: absolute;
   top: 20px;
+  max-width: 25%;
 }
 
 .momentum__inner .button-slider {
@@ -209,9 +308,19 @@ input::placeholder {
   overflow: auto;
 }
 
+@media (max-width: 768px) {
+  .momentum__inner .audio {
+    left: 5px;
+  }
+}
+
 .momentum__inner .audio__list {
   max-height: 20%;
   overflow: hidden;
+}
+
+.momentum__inner .audio__nav {
+  text-align: center;
 }
 
 .momentum__inner .audio button:nth-child(2) {
@@ -222,24 +331,47 @@ input::placeholder {
   transition: all 0.5s ease-in-out;
 }
 
+@media (max-width: 768px) {
+  .momentum__inner .audio button:nth-child(2) {
+    margin: 0px 5px;
+  }
+}
+
 .momentum__inner .audio__track {
   position: relative;
-  margin-bottom: 10px;
+  margin-bottom: 5px;
   padding-left: 20px;
+  line-height: 20px;
+  font-size: 20px;
+}
+
+@media (max-width: 768px) {
+  .momentum__inner .audio__track {
+    padding-left: 15px;
+    font-size: 14px;
+  }
 }
 
 .momentum__inner .audio__track::before {
   content: "";
   position: absolute;
   left: 0px;
-  top: 0px;
+  top: 15%;
   width: 16px;
   height: 16px;
-  background: url("../assets/svg/okDefault.svg") center/contain no-repeat;
+  background: url("../assets/svg/okDefault.svg") center/cover no-repeat;
+}
+
+@media (max-width: 768px) {
+  .momentum__inner .audio__track::before {
+    width: 12px;
+    height: 12px;
+  }
 }
 
 .momentum__inner .audio__track-active {
   color: #d38d0b;
+  background: rgba(0, 0, 0, 0.4);
 }
 
 .momentum__inner .audio__track-active::before {
@@ -248,6 +380,13 @@ input::placeholder {
 
 .momentum__inner .weather {
   right: 20px;
+}
+
+@media (max-width: 768px) {
+  .momentum__inner .weather {
+    right: 5px;
+    font-size: 14px;
+  }
 }
 
 .momentum__inner .weather div {
