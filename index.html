@@ -5,14 +5,89 @@
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="css/owfont-regular.css">
 	<link rel="stylesheet" href="css/style.css">
-	<title>Document</title>
+	<link rel="icon" href="assets/favicon.ico">
+	<title>Momentum</title>
 </head>
 
 <body>
-	<h1>Hello World</h1>
-	<p>We are <span>here)</span></p>
-	<script src="js/index.js"></script>
+	<div class="wrapper">
+		<div class="container">
+			<div class="momentum__inner">
+				<header class="time">
+					<span class="time-h">00 </span>:
+					<span class="time-m">00 </span>:
+					<span class="time-s">00</span>
+					<span class="time-daytime">PM</span>
+				</header>
+				<main class="main">
+					<section class="date">
+						<span class="date-day">Day, </span>
+						<span class="date-month">Month </span>
+						<span class="date-num"></span>
+					</section>
+					<section class="hello">
+						<span class="hello__text">Good daytime</span>
+						<input class='user__name' type="text" placeholder="[Enter name]">
+					</section>
+				</main>
+				<footer class="footer">
+					<button class="button button-quote">
+						<img src="assets/svg/reload.svg" alt="reload img">
+					</button>
+					<section class="quote">
+						<p class="quote-text"></p>
+						<p class="quote-author"></p>
+					</section>
+				</footer>
+				<aside class="audio">
+					<nav class="audio__nav">
+						<button class="button audio__button-prev">
+							<img src="assets/svg/play-prev.svg" alt="previous track">
+						</button>
+						<button class="button audio__button-play">
+							<img src="assets/svg/play.svg" alt="play">
+						</button>
+						<button class="button audio__button-next">
+							<img src="assets/svg/play-next.svg" alt="next track">
+						</button>
+					</nav>
+					<ul class="audio__list">
+					</ul>
+				</aside>
+				<aside class="weather">
+					<div class="weather__city">
+						<input class='user__city' type="text" value="minsk">
+					</div>
+					<div class="weather__error">
+					</div>
+					<div class="weather__image">
+					</div>
+					<div class="weather__temperature"> °C </div>
+					<div class="weather__wind">
+						Wind speed: m/s
+					</div>
+					<div class="weather__humidity">
+						humidity: %
+					</div>
+				</aside>
+				<button class="button button-slider button-slider-l">
+					<img src="assets/svg/slider-prev.svg" alt="prev slide">
+				</button>
+				<button class="button button-slider button-slider-r">
+					<img src="assets/svg/slider-next.svg" alt="next slide">
+				</button>
+			</div>
+		</div>
+	</div>
+	<audio src="assets/audio/Rue-Du-Soleil.mp3" data-track='Rue Du Soleil'></audio>
+	<audio src="assets/audio/Reiki-Healing.mp3" data-track='Reiki Healing'></audio>
+	<audio src="assets/audio/Suigetsu.mp3" data-track='Suigetsu'></audio>
+	<audio src="assets/audio/Mu-Beni-Sana.mp3" data-track='Mu Beni Sana'></audio>
+	<audio src="assets/audio/Forest-Love.mp3" data-track='Forest Love'></audio>
+	<audio src="assets/audio/Finding-Home.mp3" data-track='Finding Home'></audio>
+	<script type="module" src="js/index.js"></script>
 </body>
 
 </html>
