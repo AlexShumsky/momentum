@@ -231,7 +231,6 @@ function audioManager() {
 		let isPlay = !currentAudio.paused;
 		(isPlay) ? pauseAudio(isPlay) : playAudio(isPlay);
 	}
-
 	function playAudio(isPlay) {
 		currentAudio.currentTime = 0;
 		currentAudio.play();
