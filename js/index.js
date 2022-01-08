@@ -1,8 +1,9 @@
 'use strict'
-window.addEventListener('load', preloadImages)
+import { quotes } from './quotes.js';
 const images = [];
-let currentSlide;
-
+let currentSlide = addZero(getRandomNum(1, 20));
+//console.log(quotes[0])
+window.addEventListener('load', preloadImages)
 
 function preloadImages() {
 	let periods = ['night', 'morning', 'afternoon', 'evening'];
@@ -19,11 +20,11 @@ function preloadImages() {
 function appInit() {
 
 	setInterval(timeManager, 500);
-	getRandomNum(1, 20)
 	localManager()
 	changeBackground()
 	backgroundSlider()
 	getWeather()
+	//showquote()
 }
 
 function localManager() {
@@ -108,7 +109,7 @@ function changeBackground() {
 	const bgDate = new Date();
 	let dayPeriodBg = (bgDate.getHours() < 6 || bgDate.getHours() == 24) ? 'night' :
 		(bgDate.getHours() < 12) ? 'morning' : (bgDate.getHours() < 18) ? 'afternoon' : 'evening';
-	let imageLink = images.filter(image => image.src == `https://raw.githubusercontent.com/AlexShumsky/stage1-tasks/assets/images/${dayPeriodBg}/${addZero(currentSlide)}.jpg`)[0];
+	let imageLink = images.filter(image => image.src == `https://raw.githubusercontent.com/AlexShumsky/stage1-tasks/assets/images/${dayPeriodBg}/${currentSlide}.jpg`)[0];
 	document.querySelector('body').style.background = `url(${imageLink.src}) center / cover no-repeat`;
 }
 function backgroundSlider() {
@@ -122,7 +123,7 @@ function backgroundSlider() {
 
 		function prevSlide() {
 			if (timer) {
-				+currentSlide--;
+				currentSlide = addZero(+currentSlide - 1);
 				if (+currentSlide < 1) currentSlide = 20;
 				timer = false;
 				changeBackground()
@@ -133,8 +134,8 @@ function backgroundSlider() {
 
 		function nextSlide() {
 			if (timer) {
-				+currentSlide++;
-				if (+currentSlide > 20) currentSlide = 1;
+				currentSlide = addZero(+currentSlide + 1);
+				if (+currentSlide > 20) currentSlide = '01';
 				timer = false;
 				changeBackground()
 
@@ -177,12 +178,12 @@ async function getWeather(city = 'minsk') {
 		error.style.display = 'none';
 	}
 }
-
 function getRandomNum(minU, maxU) {
 	let max = Math.floor(maxU);
 	let min = Math.ceil(minU);
-	currentSlide = addZero(Math.floor(Math.random() * (max - min + 1) + min));
+	return Math.floor(Math.random() * (max - min + 1) + min);
 }
+
 function addZero(num) {
 	return (num.toString().length == 1) ? '0' + num : num;
 }
