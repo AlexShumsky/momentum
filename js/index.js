@@ -20,53 +20,15 @@ function appInit() {
 
 	setInterval(timeManager, 500);
 	localManager()
-	changeBackground()
-	backgroundSlider()
+	backgroundManager()
 	getWeather()
 	quoteManager()
-}
-function quoteManager() {
-	showQuote()
-	changeQuote()
-
-	function showQuote() {
-		const quoteContainer = document.querySelector('.quote-text');
-		const quoteAuthorContainer = document.querySelector('.quote-author');
-		let randomQuote = quotes[getRandomNum(0, 1643)];
-		quoteContainer.textContent = randomQuote.text;
-		quoteAuthorContainer.textContent = randomQuote.author || 'Anonimus';
-	}
-	function changeQuote() {
-		const quoteButton = document.querySelector('.button-quote');
-		quoteButton.addEventListener('click', showQuote)
-	}
-}
-
-
-function localManager() {
-	const userName = document.querySelector('.user__name');
-	const userCity = document.querySelector('.user__city');
-	getLocalProperties();
-
-
-	function getLocalProperties() {
-		if (localStorage.getItem('userName')) userName.value = localStorage.getItem('userName');
-		if (localStorage.getItem('userCity')) userCity.value = localStorage.getItem('userCity');
-	}
-
-	userName.addEventListener('change', saveUserName);
-	userCity.addEventListener('change', saveUserCity);
-	function saveUserName() {
-		localStorage.setItem('userName', this.value);
-	}
-	function saveUserCity() {
-		localStorage.setItem('userCity', this.value);
-		getWeather(localStorage.getItem('userCity'))
-	}
+	audioManager()
 }
 
 function timeManager() {
 	const date = new Date();
+
 	sayHello(date.getHours())
 	showCurrentTime(date.getHours(), date.getMinutes(), date.getSeconds())
 	showDayTime(date.getHours())
@@ -121,41 +83,68 @@ function timeManager() {
 		return (h > 12) ? h % 12 : h;
 	}
 }
-function changeBackground() {
-	const bgDate = new Date();
-	let dayPeriodBg = (bgDate.getHours() < 6 || bgDate.getHours() == 24) ? 'night' :
-		(bgDate.getHours() < 12) ? 'morning' : (bgDate.getHours() < 18) ? 'afternoon' : 'evening';
-	let imageLink = images.filter(image => image.src == `https://raw.githubusercontent.com/AlexShumsky/stage1-tasks/assets/images/${dayPeriodBg}/${currentSlide}.jpg`)[0];
-	document.querySelector('body').style.background = `url(${imageLink.src}) center / cover no-repeat`;
+function localManager() {
+	const userName = document.querySelector('.user__name');
+	const userCity = document.querySelector('.user__city');
+
+	userName.addEventListener('change', saveUserName);
+	userCity.addEventListener('change', saveUserCity);
+	getLocalProperties();
+
+
+	function getLocalProperties() {
+		if (localStorage.getItem('userName')) userName.value = localStorage.getItem('userName');
+		if (localStorage.getItem('userCity')) userCity.value = localStorage.getItem('userCity');
+	}
+
+	function saveUserName() {
+		localStorage.setItem('userName', this.value);
+	}
+	function saveUserCity() {
+		localStorage.setItem('userCity', this.value);
+		getWeather(localStorage.getItem('userCity'))
+	}
 }
-function backgroundSlider() {
-	const arrows = document.querySelectorAll('.button-slider');
-	let timer = true;
+function backgroundManager() {
+	changeBackground()
+	backgroundSlider()
 
-	arrows.forEach(arrow => arrow.addEventListener('click', changeCurrentSlide))
+	function changeBackground() {
+		const bgDate = new Date();
+		const dayPeriodBg = (bgDate.getHours() < 6 || bgDate.getHours() == 24) ? 'night' :
+			(bgDate.getHours() < 12) ? 'morning' : (bgDate.getHours() < 18) ? 'afternoon' : 'evening';
+		const imageLink = images.filter(image => image.src == `https://raw.githubusercontent.com/AlexShumsky/stage1-tasks/assets/images/${dayPeriodBg}/${currentSlide}.jpg`)[0];
+		document.querySelector('body').style.background = `url(${imageLink.src}) center / cover no-repeat`;
+	}
+	function backgroundSlider() {
+		const arrows = document.querySelectorAll('.button-slider');
+		let timer = true;
 
-	function changeCurrentSlide() {
-		(this.classList.contains('button-slider-r')) ? nextSlide() : prevSlide();
+		arrows.forEach(arrow => arrow.addEventListener('click', changeCurrentSlide))
 
-		function prevSlide() {
-			if (timer) {
-				currentSlide = addZero(+currentSlide - 1);
-				if (+currentSlide < 1) currentSlide = 20;
-				timer = false;
-				changeBackground()
+		function changeCurrentSlide() {
+			(this.classList.contains('button-slider-r')) ? nextSlide() : prevSlide();
 
-				setTimeout(() => timer = true, 700)
+			function prevSlide() {
+				if (timer) {
+					currentSlide = addZero(+currentSlide - 1);
+					if (+currentSlide < 1) currentSlide = 20;
+					timer = false;
+					changeBackground()
+
+					setTimeout(() => timer = true, 700)
+				}
 			}
-		}
 
-		function nextSlide() {
-			if (timer) {
-				currentSlide = addZero(+currentSlide + 1);
-				if (+currentSlide > 20) currentSlide = '01';
-				timer = false;
-				changeBackground()
+			function nextSlide() {
+				if (timer) {
+					currentSlide = addZero(+currentSlide + 1);
+					if (+currentSlide > 20) currentSlide = '01';
+					timer = false;
+					changeBackground()
 
-				setTimeout(() => timer = true, 700)
+					setTimeout(() => timer = true, 700)
+				}
 			}
 		}
 	}
@@ -169,7 +158,9 @@ async function getWeather(city = 'minsk') {
 	const humidity = document.querySelector('.weather__humidity');
 	const weatherIcon = document.querySelector('.weather__image');
 	const error = document.querySelector('.weather__error');
+
 	(data.cod == '404') ? showError() : showWeather();
+
 	function showWeather() {
 		hideError()
 		temp.textContent = `${Math.round(data.main.temp)}°C ${data.weather[0].description}`;
@@ -194,6 +185,75 @@ async function getWeather(city = 'minsk') {
 		error.style.display = 'none';
 	}
 }
+function quoteManager() {
+	showQuote()
+	changeQuote()
+
+	function showQuote() {
+		const quoteContainer = document.querySelector('.quote-text');
+		const quoteAuthorContainer = document.querySelector('.quote-author');
+		let randomQuote = quotes[getRandomNum(0, 1643)];
+		quoteContainer.textContent = randomQuote.text;
+		quoteAuthorContainer.textContent = randomQuote.author || 'Anonimus';
+	}
+	function changeQuote() {
+		const quoteButton = document.querySelector('.button-quote');
+		quoteButton.addEventListener('click', showQuote)
+	}
+}
+function audioManager() {
+	const playButton = document.querySelector('.audio__button-play');
+	const playNextButton = document.querySelector('.audio__button-next');
+	const playPrevButton = document.querySelector('.audio__button-prev');
+	const audios = document.querySelectorAll('[data-track]');
+	let trackNum = 0;
+
+	playButton.addEventListener('click', useAudio)
+	playNextButton.addEventListener('click', playNextAudio)
+	playPrevButton.addEventListener('click', playPrevAudio)
+
+	showAudioNames()
+
+	function showAudioNames() {
+		audios.forEach((audio, i) => {
+			const audioList = document.querySelector('.audio__list');
+			const audioElement = document.createElement('li');
+			audioElement.classList.add('audio__track');
+			audioElement.textContent = Object.values(audios[i].dataset);
+			audioList.append(audioElement)
+		})
+	}
+
+	function useAudio() {
+		let isPlay = !audios[trackNum].paused;
+		(isPlay) ? pauseAudio(isPlay) : playAudio(isPlay);
+	}
+
+	function playAudio(isPlay) {
+		audios[trackNum].currentTime = 0;
+		audios[trackNum].play();
+		changePlayButton(isPlay)
+	}
+	function pauseAudio(isPlay) {
+		audios[trackNum].pause();
+		changePlayButton(isPlay)
+	}
+	function playNextAudio() {
+		pauseAudio()
+		trackNum = (trackNum < audios.length - 1) ? trackNum + 1 : trackNum = 0;
+		playAudio()
+	}
+	function playPrevAudio() {
+		pauseAudio()
+		trackNum = (trackNum < 1) ? audios.length - 1 : trackNum - 1;
+		playAudio()
+	}
+
+	function changePlayButton(isPlay) {
+		playButton.children[0].src = `assets/svg/${isPlay ? 'play' : 'pause'}.svg`;
+	}
+}
+
 function getRandomNum(minU, maxU) {
 	let max = Math.floor(maxU);
 	let min = Math.ceil(minU);
