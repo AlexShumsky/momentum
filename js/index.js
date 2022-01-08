@@ -126,24 +126,33 @@ function backgroundManager() {
 			(this.classList.contains('button-slider-r')) ? nextSlide() : prevSlide();
 
 			function prevSlide() {
+				const prewArrow = document.querySelector('.button-slider-l')
 				if (timer) {
+					prewArrow.classList.add('active-arrow')
 					currentSlide = addZero(+currentSlide - 1);
 					if (+currentSlide < 1) currentSlide = 20;
 					timer = false;
 					changeBackground()
-
-					setTimeout(() => timer = true, 700)
+					setTimeout(() => {
+						timer = true;
+						prewArrow.classList.remove('active-arrow')
+					}, 700)
 				}
 			}
 
 			function nextSlide() {
+				const nextArrow = document.querySelector('.button-slider-r')
 				if (timer) {
+					nextArrow.classList.add('active-arrow')
 					currentSlide = addZero(+currentSlide + 1);
 					if (+currentSlide > 20) currentSlide = '01';
 					timer = false;
 					changeBackground()
 
-					setTimeout(() => timer = true, 700)
+					setTimeout(() => {
+						timer = true;
+						nextArrow.classList.remove('active-arrow')
+					}, 700)
 				}
 			}
 		}
@@ -195,10 +204,21 @@ function quoteManager() {
 		let randomQuote = quotes[getRandomNum(0, 1643)];
 		quoteContainer.textContent = randomQuote.text;
 		quoteAuthorContainer.textContent = randomQuote.author || 'Anonimus';
+
 	}
 	function changeQuote() {
 		const quoteButton = document.querySelector('.button-quote');
-		quoteButton.addEventListener('click', showQuote)
+		quoteButton.addEventListener('click', animateButton)
+	}
+	function animateButton() {
+		const quoteButton = document.querySelector('.button-quote');
+		quoteButton.classList.add('button-quote-active')
+		quoteButton.removeEventListener('click', animateButton)
+		setTimeout(() => {
+			quoteButton.classList.remove('button-quote-active')
+			showQuote()
+			quoteButton.addEventListener('click', animateButton)
+		}, 500)
 	}
 }
 function audioManager() {

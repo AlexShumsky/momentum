@@ -138,12 +138,35 @@ input::placeholder {
 				margin-bottom: 10px;
 			}
 		}
+		.button-quote-active {
+			img {
+				animation: animateQuote 0.5s linear;
+			}
+		}
+		@keyframes animateQuote {
+			0% {
+				transform: rotate(0deg);
+			}
+			25% {
+				transform: rotate(90deg);
+			}
+			50% {
+				transform: rotate(180deg);
+			}
+			75% {
+				transform: rotate(270deg);
+			}
+			100% {
+				transform: rotate(360deg);
+			}
+		}
 	}
 	.button {
 		background: inherit;
 		width: 40px;
 		height: 40px;
 		margin-bottom: 20px;
+
 		@media (max-width: 1024px) {
 			width: 30px;
 			height: 30px;
@@ -158,6 +181,7 @@ input::placeholder {
 			height: 100%;
 		}
 	}
+
 	aside {
 		position: absolute;
 		top: 20px;
@@ -172,6 +196,34 @@ input::placeholder {
 	}
 	.button-slider-r {
 		right: 20px;
+	}
+	.button-slider-l.active-arrow {
+		animation: animateArrowL 0.2s linear;
+		@keyframes animateArrowL {
+			0% {
+				transform: translateX(0%);
+			}
+			50% {
+				transform: translateX(-50%);
+			}
+			100% {
+				transform: translateX(-90%);
+			}
+		}
+	}
+	.button-slider-r.active-arrow {
+		animation: animateArrowR 0.2s linear;
+		@keyframes animateArrowR {
+			0% {
+				transform: translateX(0%);
+			}
+			50% {
+				transform: translateX(45%);
+			}
+			100% {
+				transform: translateX(90%);
+			}
+		}
 	}
 
 	.audio {
