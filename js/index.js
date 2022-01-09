@@ -235,25 +235,65 @@ function audioManager() {
 	playPrevButton.addEventListener('click', playPrevAudio)
 
 	showAudioNames()
-
+	progressBarManager()
 	function showAudioNames() {
 		audios.forEach((audio, i) => {
 			const audioList = document.querySelector('.audio__list');
 			const audioElement = document.createElement('li');
 			audioElement.classList.add('audio__track');
+			audioElement.dataset.num = `${i}`;
+			audioElement.addEventListener('click', playPerClick)
 			if (i == 0) audioElement.classList.add('audio__track-active');
 			audioElement.textContent = Object.values(audios[i].dataset);
 			audioList.append(audioElement)
 		})
 	}
 
+	function progressBarManager() {
+		const progressBar = document.querySelector('.input__bar');
+		const progressThumb = document.querySelector('.progress__thumb');
+		const currentProgress = document.querySelector('.progress__bar');
+
+		currentAudio.addEventListener('timeupdate', changeProgress)
+		progressBar.oninput = changeAudioProgress;
+		function changeAudioProgress() {
+			changeThumbPosition()
+			changeCurrentProgress()
+			changeCurrentTime()
+		}
+
+
+
+		function changeProgress() {
+			const audioProgress = Math.round(currentAudio.currentTime / currentAudio.duration * 100);
+			progressBar.value = audioProgress;
+			changeThumbPosition()
+			changeCurrentProgress()
+		}
+		function changeCurrentTime() {
+			currentAudio.currentTime = currentAudio.duration / 100 * progressBar.value;
+		}
+		function changeThumbPosition() {
+			progressThumb.style.left = progressBar.value + '%';
+		}
+		function changeCurrentProgress() {
+			currentProgress.style.width = progressBar.value + '%';
+		}
+	}
+	function playPerClick() {
+		let isPlay = !currentAudio.paused;
+		pauseAudio(isPlay)
+		trackNum = Object.values(this.dataset)[0];
+		currentAudio = audios[trackNum]
+		useAudio()
+	}
 	function useAudio() {
 		let isPlay = !currentAudio.paused;
 		(isPlay) ? pauseAudio(isPlay) : playAudio(isPlay);
 	}
 	function playAudio(isPlay) {
-		currentAudio.currentTime = 0;
 		currentAudio.play();
+		progressBarManager()
 		changePlayButton(isPlay)
 		markPlayTrack()
 		currentAudio.onended = () => playNextAudio()
@@ -266,12 +306,14 @@ function audioManager() {
 		pauseAudio()
 		trackNum = (trackNum < audios.length - 1) ? trackNum + 1 : trackNum = 0;
 		currentAudio = audios[trackNum];
+		currentAudio.currentTime = 0;
 		playAudio()
 	}
 	function playPrevAudio() {
 		pauseAudio()
 		trackNum = (trackNum < 1) ? audios.length - 1 : trackNum - 1;
 		currentAudio = audios[trackNum];
+		currentAudio.currentTime = 0;
 		playAudio()
 	}
 
