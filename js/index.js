@@ -1,7 +1,11 @@
 'use strict'
-import { quotes } from './quotes.js';
+import { quotesEn } from './quotesEn.js';
+import { quotesRu } from './quotesRu.js';
+import { lang } from './lang.js';
 const images = [];
 let currentSlide = addZero(getRandomNum(1, 20));
+let currentLanguage = 'en';
+let currentQuoteNum = 0;
 window.addEventListener('load', preloadImages)
 
 function preloadImages() {
@@ -29,21 +33,20 @@ function appInit() {
 function timeManager() {
 	const date = new Date();
 
-	sayHello(date.getHours())
+	(currentLanguage == 'en') ? sayHello(date.getHours()) : sayHelloR(date.getHours())
 	showCurrentTime(date.getHours(), date.getMinutes(), date.getSeconds())
-	showDayTime(date.getHours())
 	showDate(date.getDate(), date.getDay(), date.getMonth())
 
 	function showCurrentTime(h, m, s) {
 		const hour = document.querySelector('.time-h');
 		const minute = document.querySelector('.time-m');
 		const seconds = document.querySelector('.time-s');
-		hour.textContent = addZero(checkHours(h));
+		hour.textContent = addZero(h);
 		minute.textContent = addZero(m);
 		seconds.textContent = addZero(s);
 	}
 	function showDate(date, day, month) {
-		const dayObj = {
+		const dayObj = (currentLanguage == 'en') ? {
 			0: 'Sunday',
 			1: 'Monday',
 			2: 'Tuesday',
@@ -51,8 +54,16 @@ function timeManager() {
 			4: 'Thursday',
 			5: 'Friday',
 			6: 'Saturday',
-		}
-		const monthObj = {
+		} : {
+			0: 'Воскресенье',
+			1: 'Понедельник',
+			2: 'вторник',
+			3: 'Среда',
+			4: 'Четверг',
+			5: 'Пятница',
+			6: 'Суббота',
+		};
+		const monthObj = (currentLanguage == 'en') ? {
 			0: 'January',
 			1: 'February',
 			2: 'March',
@@ -65,22 +76,34 @@ function timeManager() {
 			9: 'October',
 			10: 'November',
 			11: 'December',
-		}
+		} : {
+			0: 'Январь',
+			1: 'Фквраль',
+			2: 'Март',
+			3: 'апрель',
+			4: 'Май',
+			5: 'Июнь',
+			6: 'Июль',
+			7: 'Август',
+			8: 'Сентябрь',
+			9: 'Октябрь',
+			10: 'Ноябрь',
+			11: 'Декабрь',
+		};
+
 		document.querySelector('.date-day').textContent = `${dayObj[day]}, `;
 		document.querySelector('.date-month').textContent = monthObj[month];
 		document.querySelector('.date-num').textContent = date;
-	}
-	function showDayTime(h) {
-		let daytime = document.querySelector('.time-daytime');
-		daytime.textContent = (h > 12) ? 'PM' : 'AM';
 	}
 	function sayHello(time) {
 		let dayPeriod = (time < 6 || time == 24) ? 'night' :
 			(time < 12) ? 'morning' : (time < 18) ? 'afternoon' : 'evening';
 		document.querySelector('.hello__text').textContent = `Good, ${dayPeriod}`;
 	}
-	function checkHours(h) {
-		return (h > 12) ? h % 12 : h;
+	function sayHelloR(time) {
+		let dayPeriod = (time < 6 || time == 24) ? 'Доброй ночи, ' :
+			(time < 12) ? 'Доброе утро, ' : (time < 18) ? 'Добрый день, ' : 'Добрый вечер, ';
+		document.querySelector('.hello__text').textContent = dayPeriod;
 	}
 }
 function localManager() {
@@ -159,7 +182,7 @@ function backgroundManager() {
 	}
 }
 async function getWeather(city = 'minsk') {
-	const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&lang=en&appid=052d91374bd32073e60e2c409c2a2625&units=metric`;
+	const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&lang=${(currentLanguage == 'en') ? 'en' : 'ru'}&appid=052d91374bd32073e60e2c409c2a2625&units=metric`;
 	const res = await fetch(url);
 	const data = await res.json();
 	const temp = document.querySelector('.weather__temperature');
@@ -171,12 +194,20 @@ async function getWeather(city = 'minsk') {
 	(data.cod == '404') ? showError() : showWeather();
 
 	function showWeather() {
+		(currentLanguage == 'en') ? (
+			temp.textContent = `${Math.round(data.main.temp)}°C ${data.weather[0].description}`,
+			wind.textContent = `Wind speed: ${Math.round(data.wind.speed)} m/s`,
+			humidity.textContent = `humidity:  ${data.main.humidity}%`,
+			weatherIcon.className = 'weather__image owf',
+			weatherIcon.classList.add(`owf-${data.weather[0].id}`)
+		) : (
+			temp.textContent = `${Math.round(data.main.temp)}°C ${data.weather[0].description}`,
+			wind.textContent = `Скорость ветра: ${Math.round(data.wind.speed)} м/с`,
+			humidity.textContent = `Влажность:  ${data.main.humidity}%`,
+			weatherIcon.className = 'weather__image owf',
+			weatherIcon.classList.add(`owf-${data.weather[0].id}`)
+		);
 		hideError()
-		temp.textContent = `${Math.round(data.main.temp)}°C ${data.weather[0].description}`;
-		wind.textContent = `Wind speed: ${Math.round(data.wind.speed)} m/s`;
-		humidity.textContent = `humidity:  ${data.main.humidity}%`;
-		weatherIcon.className = 'weather__image owf';
-		weatherIcon.classList.add(`owf-${data.weather[0].id}`)
 	}
 	function showError() {
 		temp.style.display = 'none';
@@ -184,7 +215,7 @@ async function getWeather(city = 'minsk') {
 		humidity.style.display = 'none';
 		weatherIcon.style.display = 'none';
 		error.style.display = 'block';
-		error.textContent = `Error! City not found for '${document.querySelector('.user__city').value}'!`
+		error.textContent = `${(currentLanguage == 'en') ? ('Error! City not found for') : ('Ошибка! Город не найден для ')} ${document.querySelector('.user__city').value}!`
 	}
 	function hideError() {
 		temp.style.display = 'block';
@@ -201,10 +232,10 @@ function quoteManager() {
 	function showQuote() {
 		const quoteContainer = document.querySelector('.quote-text');
 		const quoteAuthorContainer = document.querySelector('.quote-author');
-		let randomQuote = quotes[getRandomNum(0, 1643)];
+		currentQuoteNum = getRandomNum(0, 17);
+		let randomQuote = (currentLanguage == 'en') ? quotesEn[currentQuoteNum] : quotesRu[currentQuoteNum];
 		quoteContainer.textContent = randomQuote.text;
 		quoteAuthorContainer.textContent = randomQuote.author || 'Anonimus';
-
 	}
 	function changeQuote() {
 		const quoteButton = document.querySelector('.button-quote');
@@ -298,20 +329,24 @@ function audioManager() {
 		markPlayTrack()
 		currentAudio.onended = () => playNextAudio()
 	}
-	function pauseAudio(isPlay) {
+	function pauseAudio(isPlay = false) {
 		currentAudio.pause();
 		changePlayButton(isPlay)
 	}
 	function playNextAudio() {
+		console.log(trackNum)
+		console.log(currentAudio)
 		pauseAudio()
-		trackNum = (trackNum < audios.length - 1) ? trackNum + 1 : trackNum = 0;
+		trackNum = (trackNum < audios.length - 1) ? +trackNum + 1 : 0;
 		currentAudio = audios[trackNum];
+		console.log(trackNum)
+		console.log(currentAudio)
 		currentAudio.currentTime = 0;
 		playAudio()
 	}
 	function playPrevAudio() {
 		pauseAudio()
-		trackNum = (trackNum < 1) ? audios.length - 1 : trackNum - 1;
+		trackNum = (trackNum < 1) ? audios.length - 1 : +trackNum - 1;
 		currentAudio = audios[trackNum];
 		currentAudio.currentTime = 0;
 		playAudio()
@@ -326,7 +361,49 @@ function audioManager() {
 		tracks[trackNum].classList.add('audio__track-active')
 	}
 }
+settingsManager()
+function settingsManager() {
+	const settingsButton = document.querySelector('.settings-button');
+	const settingsMenu = document.querySelector('.settings');
+	const languages = document.querySelectorAll('.lang');
+	let isMenuOpen = false;
+	settingsButton.addEventListener('click', openSettingsMenu)
+	languages.forEach(language => language.addEventListener('click', makeLanguageActive))
 
+	function makeLanguageActive() {
+		languages.forEach(language => language.classList.remove('lang-active'))
+		this.classList.add('lang-active')
+		currentLanguage = (this.textContent == 'ру' || this.textContent == 'ru') ? 'ru' : 'en';
+		changeLanguage()
+	}
+	function changeLanguage() {
+		const langElems = document.querySelectorAll('.lng');
+		langElems.forEach(langElem => langElem.innerHTML = lang[currentLanguage][Object.values(langElem.dataset)])
+		timeManager()
+		getWeather(localStorage.getItem('userCity'))
+		translateQuote()
+
+		function translateQuote() {
+			const quoteContainer = document.querySelector('.quote-text');
+			const quoteAuthorContainer = document.querySelector('.quote-author');
+			let randomQuote = (currentLanguage == 'en') ? quotesEn[currentQuoteNum] : quotesRu[currentQuoteNum];
+			quoteContainer.textContent = randomQuote.text;
+			quoteAuthorContainer.textContent = randomQuote.author || 'Anonimus';
+		}
+	}
+
+	function openSettingsMenu() {
+		(isMenuOpen) ? (
+			settingsMenu.classList.remove('settings-open'),
+			settingsMenu.classList.add('settings-closed'),
+			isMenuOpen = false
+		) : (
+			settingsMenu.classList.remove('settings-closed'),
+			settingsMenu.classList.add('settings-open'),
+			isMenuOpen = true
+		)
+	}
+}
 function getRandomNum(minU, maxU) {
 	let max = Math.floor(maxU);
 	let min = Math.ceil(minU);

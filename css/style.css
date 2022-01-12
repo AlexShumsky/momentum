@@ -255,6 +255,9 @@ input::placeholder {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+  width: 100%;
+  padding: 10px 50px;
+  position: relative;
 }
 
 .momentum__inner .footer .quote {
@@ -322,6 +325,15 @@ input::placeholder {
   width: 40px;
   height: 40px;
   margin-bottom: 20px;
+  -webkit-transition: all 0.3s ease 0s;
+  transition: all 0.3s ease 0s;
+}
+
+.momentum__inner .button:hover {
+  -webkit-filter: invert(30%);
+          filter: invert(30%);
+  -webkit-transition: all 0.3s ease 0s;
+  transition: all 0.3s ease 0s;
 }
 
 @media (max-width: 1024px) {
@@ -381,6 +393,150 @@ input::placeholder {
   }
 }
 
+.momentum__inner .settings {
+  overflow: hidden;
+}
+
+.momentum__inner .settings__menu {
+  border: 1px solid #fff;
+  background: rgba(0, 0, 0, 0.7);
+  position: absolute;
+  right: -200%;
+  bottom: 80px;
+  padding: 10px 0px 0px 0px;
+}
+
+@media (max-width: 1024px) {
+  .momentum__inner .settings__menu {
+    bottom: 60px;
+  }
+}
+
+@media (max-width: 768px) {
+  .momentum__inner .settings__menu {
+    bottom: 40px;
+  }
+}
+
+.momentum__inner .settings__menu-list {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.momentum__inner .settings__menu-item {
+  padding: 0px 10px 10px 10px;
+}
+
+.momentum__inner .settings__menu-item button {
+  background: transparent;
+  color: #fff;
+  font-size: inherit;
+}
+
+.momentum__inner .settings__menu-item .lang-active {
+  color: #d38d0b;
+}
+
+.momentum__inner .settings__menu-item:hover {
+  color: #aaa;
+}
+
+.momentum__inner .settings__menu-item:hover .lang {
+  color: #fff;
+}
+
+.momentum__inner .settings__menu-item:hover .dash {
+  color: #fff;
+}
+
+.momentum__inner .settings__menu-item:hover .lang-active {
+  color: #d38d0b;
+}
+
+.momentum__inner .settings-button {
+  position: absolute;
+  right: 10px;
+  bottom: 0;
+  -webkit-filter: invert(100%);
+          filter: invert(100%);
+}
+
+.momentum__inner .settings-button:hover {
+  -webkit-filter: invert(70%);
+          filter: invert(70%);
+}
+
+.momentum__inner .settings.settings-open .settings__menu {
+  -webkit-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+  right: 10px;
+}
+
+.momentum__inner .settings.settings-open .settings-button {
+  -webkit-animation: settingsAnimOpen 0.3s ease;
+          animation: settingsAnimOpen 0.3s ease;
+}
+
+.momentum__inner .settings.settings-closed .settings__menu {
+  -webkit-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+  right: -200%;
+}
+
+.momentum__inner .settings.settings-closed .settings-button {
+  -webkit-animation: settingsAnimClose 0.3s ease;
+          animation: settingsAnimClose 0.3s ease;
+}
+
+@-webkit-keyframes settingsAnimOpen {
+  0% {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(-45deg);
+            transform: rotate(-45deg);
+  }
+}
+
+@keyframes settingsAnimOpen {
+  0% {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(-45deg);
+            transform: rotate(-45deg);
+  }
+}
+
+@-webkit-keyframes settingsAnimClose {
+  0% {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(45deg);
+            transform: rotate(45deg);
+  }
+}
+
+@keyframes settingsAnimClose {
+  0% {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(45deg);
+            transform: rotate(45deg);
+  }
+}
+
 .momentum__inner .button-slider {
   position: absolute;
   top: 50%;
@@ -391,12 +547,12 @@ input::placeholder {
 }
 
 .momentum__inner .button-slider-r {
-  right: 20px;
+  right: 14px;
 }
 
 .momentum__inner .button-slider-l.active-arrow {
-  -webkit-animation: animateArrowL 0.2s linear;
-          animation: animateArrowL 0.2s linear;
+  -webkit-animation: animateArrowL 0.3s linear;
+          animation: animateArrowL 0.3s linear;
 }
 
 @-webkit-keyframes animateArrowL {
@@ -409,8 +565,8 @@ input::placeholder {
             transform: translateX(-50%);
   }
   100% {
-    -webkit-transform: translateX(-90%);
-            transform: translateX(-90%);
+    -webkit-transform: translateX(0%);
+            transform: translateX(0%);
   }
 }
 
@@ -424,14 +580,14 @@ input::placeholder {
             transform: translateX(-50%);
   }
   100% {
-    -webkit-transform: translateX(-90%);
-            transform: translateX(-90%);
+    -webkit-transform: translateX(0%);
+            transform: translateX(0%);
   }
 }
 
 .momentum__inner .button-slider-r.active-arrow {
-  -webkit-animation: animateArrowR 0.2s linear;
-          animation: animateArrowR 0.2s linear;
+  -webkit-animation: animateArrowR 0.3s linear;
+          animation: animateArrowR 0.3s linear;
 }
 
 @-webkit-keyframes animateArrowR {
@@ -440,12 +596,12 @@ input::placeholder {
             transform: translateX(0%);
   }
   50% {
-    -webkit-transform: translateX(45%);
-            transform: translateX(45%);
+    -webkit-transform: translateX(50%);
+            transform: translateX(50%);
   }
   100% {
-    -webkit-transform: translateX(90%);
-            transform: translateX(90%);
+    -webkit-transform: translateX(0%);
+            transform: translateX(0%);
   }
 }
 
@@ -455,12 +611,12 @@ input::placeholder {
             transform: translateX(0%);
   }
   50% {
-    -webkit-transform: translateX(45%);
-            transform: translateX(45%);
+    -webkit-transform: translateX(50%);
+            transform: translateX(50%);
   }
   100% {
-    -webkit-transform: translateX(90%);
-            transform: translateX(90%);
+    -webkit-transform: translateX(0%);
+            transform: translateX(0%);
   }
 }
 

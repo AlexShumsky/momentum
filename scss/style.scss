@@ -137,6 +137,9 @@ input::placeholder {
 		display: flex;
 		flex-direction: column;
 		align-items: center;
+		width: 100%;
+		padding: 10px 50px;
+		position: relative;
 		.quote {
 			font-size: 14px;
 			text-align: center;
@@ -172,6 +175,11 @@ input::placeholder {
 		width: 40px;
 		height: 40px;
 		margin-bottom: 20px;
+		transition: all 0.3s ease 0s;
+		&:hover {
+			filter: invert(30%);
+			transition: all 0.3s ease 0s;
+		}
 
 		@media (max-width: 1024px) {
 			width: 30px;
@@ -211,6 +219,97 @@ input::placeholder {
 			width: 30%;
 		}
 	}
+	.settings {
+		overflow: hidden;
+		&__menu {
+			border: 1px solid #fff;
+			background: $dark;
+			position: absolute;
+			right: -200%;
+			bottom: 80px;
+			padding: 10px 0px 0px 0px;
+			@media (max-width: 1024px) {
+				bottom: 60px;
+			}
+			@media (max-width: 768px) {
+				bottom: 40px;
+			}
+		}
+
+		&__menu-list {
+			display: flex;
+			flex-direction: column;
+		}
+
+		&__menu-item {
+			padding: 0px 10px 10px 10px;
+			button {
+				background: transparent;
+				color: $white;
+				font-size: inherit;
+			}
+			.lang-active {
+				color: $active;
+			}
+			&:hover {
+				color: #aaa;
+				.lang {
+					color: $white;
+				}
+				.dash {
+					color: $white;
+				}
+				.lang-active {
+					color: $active;
+				}
+			}
+		}
+
+		&-button {
+			position: absolute;
+			right: 10px;
+			bottom: 0;
+			filter: invert(100%);
+			&:hover {
+				filter: invert(70%);
+			}
+		}
+		&.settings-open {
+			.settings__menu {
+				transition: all 0.3s ease;
+				right: 10px;
+			}
+			.settings-button {
+				animation: settingsAnimOpen 0.3s ease;
+			}
+		}
+		&.settings-closed {
+			.settings__menu {
+				transition: all 0.3s ease;
+				right: -200%;
+			}
+			.settings-button {
+				animation: settingsAnimClose 0.3s ease;
+			}
+		}
+		@keyframes settingsAnimOpen {
+			0% {
+				transform: rotate(0deg);
+			}
+			100% {
+				transform: rotate(-45deg);
+			}
+		}
+		@keyframes settingsAnimClose {
+			0% {
+				transform: rotate(0deg);
+			}
+			100% {
+				transform: rotate(45deg);
+			}
+		}
+	}
+
 	.button-slider {
 		position: absolute;
 		top: 50%;
@@ -219,10 +318,10 @@ input::placeholder {
 		left: 20px;
 	}
 	.button-slider-r {
-		right: 20px;
+		right: 14px;
 	}
 	.button-slider-l.active-arrow {
-		animation: animateArrowL 0.2s linear;
+		animation: animateArrowL 0.3s linear;
 		@keyframes animateArrowL {
 			0% {
 				transform: translateX(0%);
@@ -231,21 +330,21 @@ input::placeholder {
 				transform: translateX(-50%);
 			}
 			100% {
-				transform: translateX(-90%);
+				transform: translateX(0%);
 			}
 		}
 	}
 	.button-slider-r.active-arrow {
-		animation: animateArrowR 0.2s linear;
+		animation: animateArrowR 0.3s linear;
 		@keyframes animateArrowR {
 			0% {
 				transform: translateX(0%);
 			}
 			50% {
-				transform: translateX(45%);
+				transform: translateX(50%);
 			}
 			100% {
-				transform: translateX(90%);
+				transform: translateX(0%);
 			}
 		}
 	}
