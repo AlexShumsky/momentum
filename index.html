@@ -11,7 +11,7 @@
 	<title>Momentum</title>
 </head>
 
-<body class="EN">
+<body>
 	<div class="wrapper">
 		<div class="container">
 			<div class="momentum__inner">
@@ -91,8 +91,32 @@
 								<span class="dash">/</span>
 								<button class="lang lng" data-lng="ru">ru</button>
 							</li>
-							<li class="settings__menu-item lng" data-lng="imageSourse">image source</li>
-							<li class="settings__menu-item lng" data-lng="hide">hide blocks</li>
+							<li class="settings__menu-item lng" data-lng="imageSource">Image source</li>
+							<li class="settings__menu-item">
+								<fieldset>
+									<legend><span class="lng" data-lng="hide">Hide blocks:</span> </legend>
+									<div>
+										<input type="checkbox" class="hide-input" data-block="audio">
+										<label for="coding" class="block-hidelist lng" data-lng="player">Audio Player</label>
+									</div>
+									<div>
+										<input type="checkbox" class="hide-input" data-block="weather">
+										<label for="music" class="block-hidelist lng" data-lng="weather">Weather</label>
+									</div>
+									<div>
+										<input type="checkbox" class="hide-input" data-block="time">
+										<label for="music" class="block-hidelist lng" data-lng="clocks">Clocks</label>
+									</div>
+									<div>
+										<input type="checkbox" class="hide-input" data-block="main">
+										<label for="music" class="block-hidelist lng" data-lng="greetings">Greetings</label>
+									</div>
+									<div>
+										<input type="checkbox" class="hide-input" data-block="footer">
+										<label for="music" class="block-hidelist lng" data-lng="quotes">Quotes</label>
+									</div>
+								</fieldset>
+							</li>
 						</ul>
 					</nav>
 					<button class="button settings-button">

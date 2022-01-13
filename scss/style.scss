@@ -63,6 +63,12 @@ input::placeholder {
 		flex: 0 1 60%;
 		min-height: 125px;
 		margin-bottom: 30px;
+		transition: all 0.3s ease 0s;
+
+		font-family: "Arial-MT";
+		letter-spacing: -5px;
+		font-weight: 700;
+		font-size: 85px;
 		@media (max-width: 1024px) {
 			font-size: 60px;
 		}
@@ -70,17 +76,44 @@ input::placeholder {
 			font-size: 38px;
 			flex: 0 1 70%;
 		}
-		font-size: 85px;
-		font-family: "Arial-MT";
-		letter-spacing: -5px;
-		font-weight: 700;
 
 		&-daytime {
 			margin-left: 20px;
 		}
+		&.object-hide {
+			font-size: 0px;
+			animation: hideTime 1s linear;
+			@keyframes hideTime {
+				0% {
+					font-size: 85px;
+				}
+				50% {
+					font-size: 40px;
+				}
+				100% {
+					font-size: 0px;
+				}
+			}
+		}
+		&.object-show {
+			font-size: 85px;
+			animation: showTime 1s linear;
+			@keyframes showTime {
+				0% {
+					font-size: 0px;
+				}
+				50% {
+					font-size: 40px;
+				}
+				100% {
+					font-size: 85px;
+				}
+			}
+		}
 	}
 	.main {
 		flex: 0 1 40%;
+		width: 80%;
 		text-align: center;
 		@media (max-width: 768px) {
 			flex: 0 1 30%;
@@ -92,7 +125,6 @@ input::placeholder {
 
 		.hello {
 			font-size: 40px;
-			margin-bottom: 20px;
 			@media (max-width: 1024px) {
 				font-size: 30px;
 			}
@@ -131,14 +163,43 @@ input::placeholder {
 				}
 			}
 		}
+		&.object-hide {
+			opacity: 0%;
+			animation: hideGreetings 1s linear;
+			@keyframes hideGreetings {
+				0% {
+					opacity: 100%;
+				}
+				50% {
+					opacity: 50%;
+				}
+				100% {
+					opacity: 0%;
+				}
+			}
+		}
+		&.object-show {
+			opacity: 100%;
+			animation: showGreetings 1s linear;
+			@keyframes showGreetings {
+				0% {
+					opacity: 0%;
+				}
+				50% {
+					opacity: 50%;
+				}
+				100% {
+					opacity: 100%;
+				}
+			}
+		}
 	}
 	.footer {
-		padding-bottom: 20px;
 		display: flex;
 		flex-direction: column;
 		align-items: center;
 		width: 100%;
-		padding: 10px 50px;
+		padding: 20px 50px;
 		position: relative;
 		.quote {
 			font-size: 14px;
@@ -167,6 +228,54 @@ input::placeholder {
 			}
 			100% {
 				transform: rotate(360deg);
+			}
+		}
+		&.object-hide {
+			animation: hideFooter 1s ease-in-out;
+			opacity: 0%;
+			@keyframes hideFooter {
+				0% {
+					opacity: 100%;
+				}
+				20% {
+					opacity: 80%;
+				}
+				40% {
+					opacity: 60%;
+				}
+				60% {
+					opacity: 40%;
+				}
+				80% {
+					opacity: 20%;
+				}
+				100% {
+					opacity: 0%;
+				}
+			}
+		}
+		&.object-show {
+			animation: showFooter 1s ease-in-out;
+			opacity: 100%;
+			@keyframes showFooter {
+				0% {
+					opacity: 0%;
+				}
+				20% {
+					opacity: 20%;
+				}
+				40% {
+					opacity: 40%;
+				}
+				60% {
+					opacity: 60%;
+				}
+				80% {
+					opacity: 80%;
+				}
+				100% {
+					opacity: 100%;
+				}
 			}
 		}
 	}
@@ -223,22 +332,16 @@ input::placeholder {
 		overflow: hidden;
 		&__menu {
 			border: 1px solid #fff;
-			background: $dark;
+			background: rgba(0, 0, 0, 0.9);
 			position: absolute;
 			right: -200%;
-			bottom: 80px;
-			padding: 10px 0px 0px 0px;
-			@media (max-width: 1024px) {
-				bottom: 60px;
-			}
-			@media (max-width: 768px) {
-				bottom: 40px;
-			}
+			bottom: 20px;
 		}
 
 		&__menu-list {
 			display: flex;
 			flex-direction: column;
+			padding-top: 10px;
 		}
 
 		&__menu-item {
@@ -251,17 +354,19 @@ input::placeholder {
 			.lang-active {
 				color: $active;
 			}
-			&:hover {
-				color: #aaa;
-				.lang {
-					color: $white;
+			fieldset {
+				legend {
+					margin-bottom: 10px;
 				}
-				.dash {
-					color: $white;
+				div {
+					margin: 0px 0px 7px 10px;
 				}
-				.lang-active {
-					color: $active;
+				.block-hidelist:hover {
+					color: $gray;
 				}
+			}
+			.hide__list {
+				border: 1px solid #fff;
 			}
 		}
 
@@ -277,7 +382,7 @@ input::placeholder {
 		&.settings-open {
 			.settings__menu {
 				transition: all 0.3s ease;
-				right: 10px;
+				right: 60px;
 			}
 			.settings-button {
 				animation: settingsAnimOpen 0.3s ease;
@@ -359,6 +464,8 @@ input::placeholder {
 		flex-direction: column;
 		align-items: center;
 		justify-content: center;
+		min-width: 200px;
+		min-height: 150px;
 
 		@media (max-width: 768px) {
 			left: 5px;
@@ -479,6 +586,42 @@ input::placeholder {
 				}
 			}
 		}
+		&.object-hide {
+			animation: hideAudio 1s linear;
+			left: -100%;
+			@keyframes hideAudio {
+				0% {
+					left: 20px;
+				}
+				33% {
+					left: -25%;
+				}
+				67% {
+					left: -50%;
+				}
+				100% {
+					left: -100%;
+				}
+			}
+		}
+		&.object-show {
+			animation: showAudio 1s linear;
+			left: 20px;
+			@keyframes showAudio {
+				0% {
+					left: -100%;
+				}
+				33% {
+					left: -50%;
+				}
+				67% {
+					left: -25%;
+				}
+				100% {
+					left: 20px;
+				}
+			}
+		}
 	}
 	.weather {
 		right: 20px;
@@ -503,6 +646,42 @@ input::placeholder {
 				border-bottom: 1px solid $white;
 				padding-bottom: 5px;
 				color: $white;
+			}
+		}
+		&.object-hide {
+			animation: hideWeather 1s linear;
+			right: -100%;
+			@keyframes hideWeather {
+				0% {
+					right: 20px;
+				}
+				33% {
+					right: -25%;
+				}
+				67% {
+					right: -50%;
+				}
+				100% {
+					right: -100%;
+				}
+			}
+		}
+		&.object-show {
+			animation: showWeather 1s linear;
+			right: 20px;
+			@keyframes showWeather {
+				0% {
+					right: -100%;
+				}
+				33% {
+					right: -50%;
+				}
+				67% {
+					right: -25%;
+				}
+				100% {
+					right: 20px;
+				}
 			}
 		}
 	}

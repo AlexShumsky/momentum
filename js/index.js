@@ -6,6 +6,7 @@ const images = [];
 let currentSlide = addZero(getRandomNum(1, 20));
 let currentLanguage = 'en';
 let currentQuoteNum = 0;
+let currentAudio;
 window.addEventListener('load', preloadImages)
 
 function preloadImages() {
@@ -28,6 +29,7 @@ function appInit() {
 	getWeather()
 	quoteManager()
 	audioManager()
+	settingsManager()
 }
 
 function timeManager() {
@@ -181,7 +183,8 @@ function backgroundManager() {
 		}
 	}
 }
-async function getWeather(city = 'minsk') {
+async function getWeather(city) {
+	if (city == null) city = 'minsk';
 	const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&lang=${(currentLanguage == 'en') ? 'en' : 'ru'}&appid=052d91374bd32073e60e2c409c2a2625&units=metric`;
 	const res = await fetch(url);
 	const data = await res.json();
@@ -190,8 +193,10 @@ async function getWeather(city = 'minsk') {
 	const humidity = document.querySelector('.weather__humidity');
 	const weatherIcon = document.querySelector('.weather__image');
 	const error = document.querySelector('.weather__error');
-
+	const userCity = document.querySelector('.user__city');
+	userCity.value = data.name || userCity.value;
 	(data.cod == '404') ? showError() : showWeather();
+
 
 	function showWeather() {
 		(currentLanguage == 'en') ? (
@@ -258,7 +263,7 @@ function audioManager() {
 	const playPrevButton = document.querySelector('.audio__button-prev');
 	const audios = document.querySelectorAll('[data-track]');
 	let trackNum = 0;
-	let currentAudio = audios[trackNum];
+	currentAudio = audios[trackNum];
 
 
 	playButton.addEventListener('click', useAudio)
@@ -334,13 +339,9 @@ function audioManager() {
 		changePlayButton(isPlay)
 	}
 	function playNextAudio() {
-		console.log(trackNum)
-		console.log(currentAudio)
 		pauseAudio()
 		trackNum = (trackNum < audios.length - 1) ? +trackNum + 1 : 0;
 		currentAudio = audios[trackNum];
-		console.log(trackNum)
-		console.log(currentAudio)
 		currentAudio.currentTime = 0;
 		playAudio()
 	}
@@ -361,12 +362,15 @@ function audioManager() {
 		tracks[trackNum].classList.add('audio__track-active')
 	}
 }
-settingsManager()
 function settingsManager() {
 	const settingsButton = document.querySelector('.settings-button');
 	const settingsMenu = document.querySelector('.settings');
 	const languages = document.querySelectorAll('.lang');
+	const hidenBlocks = document.querySelectorAll('.hide-input');
+
 	let isMenuOpen = false;
+
+	hidenBlocks.forEach(block => block.addEventListener('click', toggleBlock))
 	settingsButton.addEventListener('click', openSettingsMenu)
 	languages.forEach(language => language.addEventListener('click', makeLanguageActive))
 
@@ -377,12 +381,12 @@ function settingsManager() {
 		changeLanguage()
 	}
 	function changeLanguage() {
+		const userName = document.querySelector('.user__name');
 		const langElems = document.querySelectorAll('.lng');
 		langElems.forEach(langElem => langElem.innerHTML = lang[currentLanguage][Object.values(langElem.dataset)])
 		timeManager()
 		getWeather(localStorage.getItem('userCity'))
 		translateQuote()
-
 		function translateQuote() {
 			const quoteContainer = document.querySelector('.quote-text');
 			const quoteAuthorContainer = document.querySelector('.quote-author');
@@ -390,6 +394,7 @@ function settingsManager() {
 			quoteContainer.textContent = randomQuote.text;
 			quoteAuthorContainer.textContent = randomQuote.author || 'Anonimus';
 		}
+		(currentLanguage == 'en') ? userName.placeholder = '[Enter name]' : userName.placeholder = '[Введите имя]';
 	}
 
 	function openSettingsMenu() {
@@ -402,6 +407,23 @@ function settingsManager() {
 			settingsMenu.classList.add('settings-open'),
 			isMenuOpen = true
 		)
+	}
+
+	function toggleBlock() {
+
+		const userBlock = document.querySelector(`.${Object.values(this.dataset)}`);
+		if (userBlock.classList.contains('audio')) {
+			currentAudio.pause();
+			document.querySelector('.audio__button-play').children[0].src = `assets/svg/play.svg`;
+		};
+		(userBlock.classList.contains('object-hide')) ?
+			(
+				userBlock.classList.add('object-show'),
+				userBlock.classList.remove('object-hide'),
+				setTimeout(() =>
+					userBlock.classList.remove('object-show')
+					, 1000)
+			) : userBlock.classList.add('object-hide');
 	}
 }
 function getRandomNum(minU, maxU) {
