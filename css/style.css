@@ -96,10 +96,12 @@ input::placeholder {
           flex: 0 1 60%;
   min-height: 125px;
   margin-bottom: 30px;
-  font-size: 85px;
+  -webkit-transition: all 0.3s ease 0s;
+  transition: all 0.3s ease 0s;
   font-family: "Arial-MT";
   letter-spacing: -5px;
   font-weight: 700;
+  font-size: 85px;
 }
 
 @media (max-width: 1024px) {
@@ -121,10 +123,71 @@ input::placeholder {
   margin-left: 20px;
 }
 
+.momentum__inner .time.object-hide {
+  font-size: 0px;
+  -webkit-animation: hideTime 1s linear;
+          animation: hideTime 1s linear;
+}
+
+@-webkit-keyframes hideTime {
+  0% {
+    font-size: 85px;
+  }
+  50% {
+    font-size: 40px;
+  }
+  100% {
+    font-size: 0px;
+  }
+}
+
+@keyframes hideTime {
+  0% {
+    font-size: 85px;
+  }
+  50% {
+    font-size: 40px;
+  }
+  100% {
+    font-size: 0px;
+  }
+}
+
+.momentum__inner .time.object-show {
+  font-size: 85px;
+  -webkit-animation: showTime 1s linear;
+          animation: showTime 1s linear;
+}
+
+@-webkit-keyframes showTime {
+  0% {
+    font-size: 0px;
+  }
+  50% {
+    font-size: 40px;
+  }
+  100% {
+    font-size: 85px;
+  }
+}
+
+@keyframes showTime {
+  0% {
+    font-size: 0px;
+  }
+  50% {
+    font-size: 40px;
+  }
+  100% {
+    font-size: 85px;
+  }
+}
+
 .momentum__inner .main {
   -webkit-box-flex: 0;
       -ms-flex: 0 1 40%;
           flex: 0 1 40%;
+  width: 80%;
   text-align: center;
 }
 
@@ -143,7 +206,6 @@ input::placeholder {
 
 .momentum__inner .main .hello {
   font-size: 40px;
-  margin-bottom: 20px;
 }
 
 @media (max-width: 1024px) {
@@ -243,8 +305,67 @@ input::placeholder {
   }
 }
 
+.momentum__inner .main.object-hide {
+  opacity: 0%;
+  -webkit-animation: hideGreetings 1s linear;
+          animation: hideGreetings 1s linear;
+}
+
+@-webkit-keyframes hideGreetings {
+  0% {
+    opacity: 100%;
+  }
+  50% {
+    opacity: 50%;
+  }
+  100% {
+    opacity: 0%;
+  }
+}
+
+@keyframes hideGreetings {
+  0% {
+    opacity: 100%;
+  }
+  50% {
+    opacity: 50%;
+  }
+  100% {
+    opacity: 0%;
+  }
+}
+
+.momentum__inner .main.object-show {
+  opacity: 100%;
+  -webkit-animation: showGreetings 1s linear;
+          animation: showGreetings 1s linear;
+}
+
+@-webkit-keyframes showGreetings {
+  0% {
+    opacity: 0%;
+  }
+  50% {
+    opacity: 50%;
+  }
+  100% {
+    opacity: 100%;
+  }
+}
+
+@keyframes showGreetings {
+  0% {
+    opacity: 0%;
+  }
+  50% {
+    opacity: 50%;
+  }
+  100% {
+    opacity: 100%;
+  }
+}
+
 .momentum__inner .footer {
-  padding-bottom: 20px;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -256,7 +377,7 @@ input::placeholder {
       -ms-flex-align: center;
           align-items: center;
   width: 100%;
-  padding: 10px 50px;
+  padding: 20px 50px;
   position: relative;
 }
 
@@ -317,6 +438,102 @@ input::placeholder {
   100% {
     -webkit-transform: rotate(360deg);
             transform: rotate(360deg);
+  }
+}
+
+.momentum__inner .footer.object-hide {
+  -webkit-animation: hideFooter 1s ease-in-out;
+          animation: hideFooter 1s ease-in-out;
+  opacity: 0%;
+}
+
+@-webkit-keyframes hideFooter {
+  0% {
+    opacity: 100%;
+  }
+  20% {
+    opacity: 80%;
+  }
+  40% {
+    opacity: 60%;
+  }
+  60% {
+    opacity: 40%;
+  }
+  80% {
+    opacity: 20%;
+  }
+  100% {
+    opacity: 0%;
+  }
+}
+
+@keyframes hideFooter {
+  0% {
+    opacity: 100%;
+  }
+  20% {
+    opacity: 80%;
+  }
+  40% {
+    opacity: 60%;
+  }
+  60% {
+    opacity: 40%;
+  }
+  80% {
+    opacity: 20%;
+  }
+  100% {
+    opacity: 0%;
+  }
+}
+
+.momentum__inner .footer.object-show {
+  -webkit-animation: showFooter 1s ease-in-out;
+          animation: showFooter 1s ease-in-out;
+  opacity: 100%;
+}
+
+@-webkit-keyframes showFooter {
+  0% {
+    opacity: 0%;
+  }
+  20% {
+    opacity: 20%;
+  }
+  40% {
+    opacity: 40%;
+  }
+  60% {
+    opacity: 60%;
+  }
+  80% {
+    opacity: 80%;
+  }
+  100% {
+    opacity: 100%;
+  }
+}
+
+@keyframes showFooter {
+  0% {
+    opacity: 0%;
+  }
+  20% {
+    opacity: 20%;
+  }
+  40% {
+    opacity: 40%;
+  }
+  60% {
+    opacity: 60%;
+  }
+  80% {
+    opacity: 80%;
+  }
+  100% {
+    opacity: 100%;
   }
 }
 
@@ -399,23 +616,10 @@ input::placeholder {
 
 .momentum__inner .settings__menu {
   border: 1px solid #fff;
-  background: rgba(0, 0, 0, 0.7);
+  background: rgba(0, 0, 0, 0.9);
   position: absolute;
   right: -200%;
-  bottom: 80px;
-  padding: 10px 0px 0px 0px;
-}
-
-@media (max-width: 1024px) {
-  .momentum__inner .settings__menu {
-    bottom: 60px;
-  }
-}
-
-@media (max-width: 768px) {
-  .momentum__inner .settings__menu {
-    bottom: 40px;
-  }
+  bottom: 20px;
 }
 
 .momentum__inner .settings__menu-list {
@@ -426,6 +630,7 @@ input::placeholder {
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
+  padding-top: 10px;
 }
 
 .momentum__inner .settings__menu-item {
@@ -442,20 +647,20 @@ input::placeholder {
   color: #d38d0b;
 }
 
-.momentum__inner .settings__menu-item:hover {
-  color: #aaa;
+.momentum__inner .settings__menu-item fieldset legend {
+  margin-bottom: 10px;
 }
 
-.momentum__inner .settings__menu-item:hover .lang {
-  color: #fff;
+.momentum__inner .settings__menu-item fieldset div {
+  margin: 0px 0px 7px 10px;
 }
 
-.momentum__inner .settings__menu-item:hover .dash {
-  color: #fff;
+.momentum__inner .settings__menu-item fieldset .block-hidelist:hover {
+  color: #bbb;
 }
 
-.momentum__inner .settings__menu-item:hover .lang-active {
-  color: #d38d0b;
+.momentum__inner .settings__menu-item .hide__list {
+  border: 1px solid #fff;
 }
 
 .momentum__inner .settings-button {
@@ -474,7 +679,7 @@ input::placeholder {
 .momentum__inner .settings.settings-open .settings__menu {
   -webkit-transition: all 0.3s ease;
   transition: all 0.3s ease;
-  right: 10px;
+  right: 60px;
 }
 
 .momentum__inner .settings.settings-open .settings-button {
@@ -639,6 +844,8 @@ input::placeholder {
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
+  min-width: 200px;
+  min-height: 150px;
 }
 
 @media (max-width: 768px) {
@@ -781,6 +988,78 @@ input::placeholder {
   background: url("../assets/svg/okActive.svg") center/contain no-repeat;
 }
 
+.momentum__inner .audio.object-hide {
+  -webkit-animation: hideAudio 1s linear;
+          animation: hideAudio 1s linear;
+  left: -100%;
+}
+
+@-webkit-keyframes hideAudio {
+  0% {
+    left: 20px;
+  }
+  33% {
+    left: -25%;
+  }
+  67% {
+    left: -50%;
+  }
+  100% {
+    left: -100%;
+  }
+}
+
+@keyframes hideAudio {
+  0% {
+    left: 20px;
+  }
+  33% {
+    left: -25%;
+  }
+  67% {
+    left: -50%;
+  }
+  100% {
+    left: -100%;
+  }
+}
+
+.momentum__inner .audio.object-show {
+  -webkit-animation: showAudio 1s linear;
+          animation: showAudio 1s linear;
+  left: 20px;
+}
+
+@-webkit-keyframes showAudio {
+  0% {
+    left: -100%;
+  }
+  33% {
+    left: -50%;
+  }
+  67% {
+    left: -25%;
+  }
+  100% {
+    left: 20px;
+  }
+}
+
+@keyframes showAudio {
+  0% {
+    left: -100%;
+  }
+  33% {
+    left: -50%;
+  }
+  67% {
+    left: -25%;
+  }
+  100% {
+    left: 20px;
+  }
+}
+
 .momentum__inner .weather {
   right: 20px;
 }
@@ -813,4 +1092,76 @@ input::placeholder {
   border-bottom: 1px solid #fff;
   padding-bottom: 5px;
   color: #fff;
+}
+
+.momentum__inner .weather.object-hide {
+  -webkit-animation: hideWeather 1s linear;
+          animation: hideWeather 1s linear;
+  right: -100%;
+}
+
+@-webkit-keyframes hideWeather {
+  0% {
+    right: 20px;
+  }
+  33% {
+    right: -25%;
+  }
+  67% {
+    right: -50%;
+  }
+  100% {
+    right: -100%;
+  }
+}
+
+@keyframes hideWeather {
+  0% {
+    right: 20px;
+  }
+  33% {
+    right: -25%;
+  }
+  67% {
+    right: -50%;
+  }
+  100% {
+    right: -100%;
+  }
+}
+
+.momentum__inner .weather.object-show {
+  -webkit-animation: showWeather 1s linear;
+          animation: showWeather 1s linear;
+  right: 20px;
+}
+
+@-webkit-keyframes showWeather {
+  0% {
+    right: -100%;
+  }
+  33% {
+    right: -50%;
+  }
+  67% {
+    right: -25%;
+  }
+  100% {
+    right: 20px;
+  }
+}
+
+@keyframes showWeather {
+  0% {
+    right: -100%;
+  }
+  33% {
+    right: -50%;
+  }
+  67% {
+    right: -25%;
+  }
+  100% {
+    right: 20px;
+  }
 }
