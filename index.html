@@ -11,7 +11,7 @@
 	<title>Momentum</title>
 </head>
 
-<body>
+<body class="EN">
 	<div class="wrapper">
 		<div class="container">
 			<div class="momentum__inner">
@@ -19,22 +19,21 @@
 					<span class="time-h">00 </span>:
 					<span class="time-m">00 </span>:
 					<span class="time-s">00</span>
-					<span class="time-daytime">PM</span>
 				</header>
 				<main class="main">
 					<section class="date">
-						<span class="date-day">Day, </span>
-						<span class="date-month">Month </span>
+						<span class="date-day"></span>
+						<span class="date-month"></span>
 						<span class="date-num"></span>
 					</section>
 					<section class="hello">
-						<span class="hello__text">Good daytime</span>
+						<span class="hello__text lng" data-lng="greetings"></span>
 						<input class='user__name' type="text" placeholder="[Enter name]">
 					</section>
 				</main>
 				<footer class="footer">
 					<button class="button button-quote">
-						<img src="assets/svg/reload.svg" alt="reload img">
+						<img src="assets/svg/reload.svg" alt="change quote button">
 					</button>
 					<section class="quote">
 						<p class="quote-text"></p>
@@ -83,6 +82,23 @@
 				<button class="button button-slider button-slider-r">
 					<img src="assets/svg/slider-next.svg" alt="next slide">
 				</button>
+				<section class="settings">
+					<nav class="settings__menu">
+						<ul class="settings__menu-list">
+							<li class="settings__menu-item">
+								<span class="lng" data-lng="language">Language: </span>
+								<button class="lang lng lang-active" data-lng="en">en</button>
+								<span class="dash">/</span>
+								<button class="lang lng" data-lng="ru">ru</button>
+							</li>
+							<li class="settings__menu-item lng" data-lng="imageSourse">image source</li>
+							<li class="settings__menu-item lng" data-lng="hide">hide blocks</li>
+						</ul>
+					</nav>
+					<button class="button settings-button">
+						<img src="assets/svg/gear.svg" alt="settings button">
+					</button>
+				</section>
 			</div>
 		</div>
 	</div>
