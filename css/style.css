@@ -6,10 +6,6 @@
   /* Путь к файлу со шрифтом */
 }
 
-html {
-  min-width: 360px;
-}
-
 body {
   color: #fff;
   -webkit-user-select: none;
